@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Finisar_All_Quotes</fullName>
+    <columns>QUOTE.NAME</columns>
+    <columns>QUOTE.QUOTENUMBER</columns>
+    <columns>Account__c</columns>
+    <columns>Price_List__c</columns>
+    <columns>Type_of_Pricing__c</columns>
+    <columns>Owner</columns>
+    <columns>QUOTE.STATUS</columns>
+    <filterScope>Everything</filterScope>
+    <label>* Finisar All Quotes</label>
+</ListView>

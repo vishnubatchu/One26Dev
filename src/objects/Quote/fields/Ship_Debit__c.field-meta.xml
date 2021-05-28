@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ship_Debit__c</fullName>
+    <externalId>true</externalId>
+    <inlineHelpText>Ship &amp; Debit Quote# will populate here (Sxxxxxx) for all approved quote lines after a Disti Quote has been approved.</inlineHelpText>
+    <label>Ship &amp; Debit #</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

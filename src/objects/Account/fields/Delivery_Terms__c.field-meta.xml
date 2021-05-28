@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Delivery_Terms__c</fullName>
+    <description>Use to set the standard delivery terms for a customer.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Use to set the standard delivery terms for a customer. Copied to the Delivery Terms field on the Quote.</inlineHelpText>
+    <label>Standard Delivery Terms</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

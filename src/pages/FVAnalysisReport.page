@@ -1,0 +1,151 @@
+<apex:page sidebar="false" standardStylesheets="true" showHeader="false"  applyHtmlTag="true" controller="CreateFVReport">
+    
+    <html>
+        <head>
+            <style>
+                .span_style{
+                font-size: 12.0pt; 
+                font-family: "Calibri","sans-serif"; 
+                color: #1F497D;
+                
+                }
+                
+                .table_outer {
+                border:1px solid #CCC;
+                border-collapse:collapse;
+                width : 90%;
+                }
+                table ,tr {
+                border-collapse: collapse;
+                
+                }
+                .outerTable{
+                width: 500px;
+                }
+                .inner_td{
+                padding:'.75pt .75pt .75pt .75pt';	
+                word-wrap:break-word;	
+                border:1px solid white;
+                }
+                .MsoNormal{
+                font-size: 10.0pt; 
+                font-family: "Arial","sans-serif"; 
+                color: #1F497D;
+                word-wrap:break-word;
+                }
+                
+                td{
+                padding: .75pt .75pt .75pt .75pt;
+                word-wrap:break-word;
+                width: 100px;
+                }
+                .fadatarows{
+                
+                }
+                .datarows{
+                width:'100px';
+                padding:'.75pt .75pt .75pt .75pt';
+                word-wrap:break-word;
+                border:1px solid white;                
+                }
+            </style>
+            
+        </head>
+        
+        <body>
+            <br/>
+            <br/>
+            <br/>
+            <table class="table_outer" style="width : 90%;">
+                <div class="outerTable">
+                    <tr>
+                        <th colspan="2" bgcolor="#CCCC99"><span class="span_style" style="font-size: 16.0pt">
+                            <p><b><center>Failure Verification Report</center></b></p></span>
+                        </th>
+                    </tr>
+                    
+                    <tr class='orderrow'>
+                        <td style="width: 100px">
+                            <p><b><span class="span_style">Customer Name </span></b></p>
+                        </td>
+                        <td style="width: 500px">
+                            <p><b><span class="span_style">{!orderline.order__r.Account.Name} </span></b></p>
+                        </td>
+                        
+                        
+                    </tr>
+                    <tr class='orderrow'>
+                        <td style="width: 100px">
+                            <p><b><span class="span_style">RMA Number </span></b></p>
+                        </td>
+                        <td>
+                            {!orderline.order__r.PoNumber}
+                        </td>
+                    </tr>
+                    <tr class='orderrow'>
+                        <td style="width: 100px">
+                            <p><b><span class="span_style">Received Date </span></b></p>
+                        </td>
+                        <td style="width: 500px">
+                            <p><b><span class="span_style">{!orderline.RMA_Received_Date__c}</span></b></p>
+                        </td>
+                    </tr>
+                    <tr class='orderrow'>
+                        <td style="width: 100px">
+                            <p><b><span class="span_style">Finisar Part Number </span></b></p>
+                        </td>
+                        <td style="width: 500px">
+                            <p><b><span class="span_style">{!orderline.Marketing_Part__c} </span></b></p>
+                        </td>
+                    </tr>
+                    
+                    <tr class='orderrow'>
+                        <td style="width: 100px">
+                            <p><b><span class="span_style">Reported Problem </span></b></p>
+                        </td>
+                        <td style="width: 500px">
+                            <p><b><span class="span_style">{!orderline.Reported_Problem__c} </span></b></p>
+                        </td>
+                    </tr>
+                </div>
+                <tr>
+                    <td colspan="2">
+                        <table class="table_outer" border="1" cellspacing="0" cellpadding="0" style="width : 100%;">
+                            <tr bgcolor="#CCCC99">
+                                
+                                <td class="inner_td" style="width: 20%">
+                                    <p class="MsoNormal" style="text-align: center; "><b>Serial Number name</b></p>
+                                </td>
+                                <td class="inner_td" style="width: 20%">
+                                    <p class="MsoNormal" style="text-align: center; "><b>Serial Number Date Code</b></p>
+                                </td>
+                                <td class="inner_td" style="width: 20%">
+                                    <p class="MsoNormal" style="text-align: center; "><b>Final Functional Test</b></p>
+                                </td>
+                                <td class="inner_td" style="width: 20%">
+                                    <p class="MsoNormal" style="text-align: center; "><b>Temp Bert</b></p>
+                                </td>
+                                <td class="inner_td" style="width: 20%">
+                                    <p class="MsoNormal" style="text-align: center; "><b>Result</b></p>
+                                </td>
+                            </tr>
+                            
+                            <apex:repeat value="{!fafvdetaillist}" var="item" >
+                                <tr bgcolor="#F7F7E7">
+									<td class="datarows">{!item.Serial_Number__r.Name}</td>
+                                    <td class="datarows">{!item.Serial_Number__r.Date_Code__c}</td>
+                                    <td class="datarows">{!item.FA_FV__r.Final_Function_Test__c} </td>
+                                    <td class="datarows">{!item.FA_FV__r.Temp_BERT__c} </td>
+                                    <td class="datarows">{!item.FA_FV__r.Final_Function_Test__c} </td>
+                                    
+                                </tr>
+                                
+                            </apex:repeat>
+                            
+                        </table>
+                    </td></tr>           
+            </table>
+        </body>    
+        
+    </html>
+</apex:page>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OpportunityId</fullName>
+    <inlineHelpText>If the quote was created from an Opportunity/Design Registration, the Oppty/DR Name will show up here. If you want to manually link the quote to an Opportunity/Design Registration, you can enter the Oppty/DR Name which is linked to the specific Oppty/DR#.</inlineHelpText>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>MasterDetail</type>
+</CustomField>

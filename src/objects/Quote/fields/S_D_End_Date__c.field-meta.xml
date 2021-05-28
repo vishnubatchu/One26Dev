@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>S_D_End_Date__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>The valid end date of the Ship &amp; Debit Quote.   Note the S&amp;D End Date can be extended for another 6 months, once you&apos;re within 30 days of the S&amp;D End Date.</inlineHelpText>
+    <label>S&amp;D End Date</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Date</type>
+</CustomField>

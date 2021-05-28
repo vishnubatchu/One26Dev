@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Approval_Matrix</fullName>
+    <columns>MasterLabel</columns>
+    <columns>Approver__c</columns>
+    <columns>Product_Group_Segment1__c</columns>
+    <columns>Configuration_Segment4__c</columns>
+    <columns>ConfigurationNotOperator__c</columns>
+    <columns>Family_Segment2__c</columns>
+    <columns>FamilySegmentNotOperator__c</columns>
+    <columns>Detector_Segment7__c</columns>
+    <columns>Laser_Segment6__c</columns>
+    <columns>LaserNotOperator__c</columns>
+    <columns>Market_Application_Segment5__c</columns>
+    <columns>MarketAppNotOperator__c</columns>
+    <columns>Form_Factor_Segment3__c</columns>
+    <columns>IT_Rule_Name__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Product_Group_Segment1__c</field>
+        <operation>contains</operation>
+        <value>400 GIG</value>
+    </filters>
+    <label>Approval Matrix</label>
+</ListView>

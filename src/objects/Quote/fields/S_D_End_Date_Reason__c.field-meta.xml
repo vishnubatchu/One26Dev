@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>S_D_End_Date_Reason__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Ship &amp; Debit End Date reason will be inputted by Admins if (a) they were requested to end-date the line by the quote creator, or (b) if the S&amp;D line is no longer valid due to new published Disti Costs from the latest Price Book.</inlineHelpText>
+    <label>S&amp;D End Date Reason</label>
+    <length>100</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

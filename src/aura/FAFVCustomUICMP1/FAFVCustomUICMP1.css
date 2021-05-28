@@ -1,0 +1,20 @@
+.THIS .selected {
+  background-color:  #66c2ff;
+    color: #2B547E;
+}
+
+.THIS .customWidth {
+  width:19%;
+    cursor: pointer;
+}
+.THIS .customWidth1 {
+  width:35%;
+    cursor: pointer;
+}
+.THIS .slds-truncate{
+   cursor: pointer; 
+}
+
+.THIS .customPadding {
+  padding-left: 4px;
+}

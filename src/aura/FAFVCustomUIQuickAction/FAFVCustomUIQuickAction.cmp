@@ -1,0 +1,7 @@
+<aura:component description="c:hello component" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader,force:appHostable">
+    <aura:attribute name="pageReference" type="Object"/>
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+    <lightning:navigation aura:id="navService"/>
+    <aura:attribute name="myBool" type="Boolean" default="true"/>
+    <aura:handler name="change" value="{!v.myBool}" action="{!c.handleClick}"/>
+</aura:component>
