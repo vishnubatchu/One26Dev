@@ -89,7 +89,27 @@ public with sharing class WTC_FileAttachments_Controller {
 
         try {
             if (toInsert.size() > 0) {
-                insert toInsert;
+                //insert toInsert;
+                //Begin - In order to link the documents with case
+               	set<Id> cvIds = new set<Id>();
+                Database.SaveResult[] results = Database.insert(toInsert);
+                for(Database.SaveResult result : results){
+                    Id cvId = result.getId();
+                    cvIds.add(cvId);
+                }
+                System.debug('>>>>> CVs' + cvIds);
+                List<ContentDocumentLink> cdLinks = new List<ContentDocumentLink>();
+                List<ContentVersion> files = new List<ContentVersion>();
+                files = [Select Id, ContentDocumentId From ContentVersion Where Id In: cvIds];
+                Id caseId = ApexPages.currentPage().getParameters().get('caseID');
+                
+                for(ContentVersion cv : files){                    
+                  cdLinks.add(new ContentDocumentLink (
+                      				ContentDocumentId = cv.ContentDocumentId, 
+                                   	LinkedEntityId = caseId));
+                }
+                insert cdLinks;
+                //End - In order to link the documents with case
                 System.debug('[-] Inserted ' + toInsert.size() + ' atts');
                 toInsert = null;
                 newAttachments = null;

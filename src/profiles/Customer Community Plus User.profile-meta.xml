@@ -3489,6 +3489,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Event.Event_Salesforce_Legacy_Id__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Event.Executive_Summary__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -10485,6 +10490,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Task.Est_Completion_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.Event_Salesforce_Legacy_Id__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
