@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>52.0</apiVersion>
+    <assignments>
+        <name>Set_Oder_Record</name>
+        <label>Set Oder Record</label>
+        <locationX>727</locationX>
+        <locationY>637</locationY>
+        <assignmentItems>
+            <assignToReference>orderRecord</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_OrderShare_record</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Check_if_Account_and_it_s_Global_Ultimate_parent_are_not_null</name>
         <label>Check if Account and it&apos;s Global Ultimate parent are not null</label>
@@ -24,8 +40,15 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.Global_Ultimate_Parent__r.OwnerId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.OwnerId</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Create_OrderShare_record</targetReference>
+                <targetReference>Set_Oder_Record</targetReference>
             </connector>
             <label>Account and it&apos;s Global Ultimate parent are not null</label>
         </rules>
@@ -224,7 +247,7 @@
         <inputAssignments>
             <field>OrderId</field>
             <value>
-                <elementReference>$Record.Id</elementReference>
+                <elementReference>orderRecord.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -236,7 +259,7 @@
         <inputAssignments>
             <field>UserOrGroupId</field>
             <value>
-                <elementReference>$Record.Account.Global_Ultimate_Parent__r.Owner.Id</elementReference>
+                <elementReference>orderRecord.Account.Global_Ultimate_Parent__r.OwnerId</elementReference>
             </value>
         </inputAssignments>
         <object>OrderShare</object>
@@ -305,4 +328,12 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
+    <variables>
+        <name>orderRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Order</objectType>
+    </variables>
 </Flow>

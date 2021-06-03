@@ -210,7 +210,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Region__c</field>
+                <field>Glovia_Region__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -236,11 +236,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Region_Country__c</field>
+                <field>Glovia_Region_Country__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Region_State__c</field>
+                <field>Glovia_Region_State__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

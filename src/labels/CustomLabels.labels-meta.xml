@@ -149,6 +149,13 @@
         <value>finisar_gdpr_email_services@w-nj5uln1g520ehhcystrytqr95esukh6xtyxtu7gr0o59mu44l.1n-1bq3tuaw.na78.apex.salesforce.com</value>
     </labels>
     <labels>
+        <fullName>Global_Parent_Owner_Account_Update_Batch_Notification_EmaildId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Global Parent Owner/Account Update Batch Notification EmaildId</shortDescription>
+        <value>pu@hcg.com</value>
+    </labels>
+    <labels>
         <fullName>INVALID_FILE_ROW_SIZE_DOESNT_MATCH</fullName>
         <categories>CMT</categories>
         <language>en_US</language>

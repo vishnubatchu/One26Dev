@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>52.0</apiVersion>
+    <assignments>
+        <name>Set_OrderLine_Record</name>
+        <label>Set OrderLine Record</label>
+        <locationX>725</locationX>
+        <locationY>751</locationY>
+        <assignmentItems>
+            <assignToReference>orderLineRecord</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_OrderLineShare_record</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Check_if_Account_and_it_s_Global_Ultimate_parent_are_not_null</name>
         <label>Check if Account and it&apos;s Global Ultimate parent are not null</label>
-        <locationX>707</locationX>
-        <locationY>592</locationY>
+        <locationX>641</locationX>
+        <locationY>534</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Account_and_it_s_Global_Ultimate_parent_are_not_null</name>
@@ -24,8 +40,15 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.Customer_Name__r.Global_Ultimate_Parent__r.OwnerId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.OwnerId</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Create_OrderLineShare_record</targetReference>
+                <targetReference>Set_OrderLine_Record</targetReference>
             </connector>
             <label>Account and it&apos;s Global Ultimate parent are not null</label>
         </rules>
@@ -213,8 +236,8 @@
     <recordCreates>
         <name>Create_OrderLineShare_record</name>
         <label>Create OrderLineShare record</label>
-        <locationX>1006</locationX>
-        <locationY>706</locationY>
+        <locationX>1004</locationX>
+        <locationY>705</locationY>
         <inputAssignments>
             <field>AccessLevel</field>
             <value>
@@ -224,7 +247,7 @@
         <inputAssignments>
             <field>ParentId</field>
             <value>
-                <elementReference>$Record.Id</elementReference>
+                <elementReference>orderLineRecord.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -236,7 +259,7 @@
         <inputAssignments>
             <field>UserOrGroupId</field>
             <value>
-                <elementReference>$Record.Customer_Name__r.Global_Ultimate_Parent__r.OwnerId</elementReference>
+                <elementReference>orderLineRecord.Customer_Name__r.Global_Ultimate_Parent__r.OwnerId</elementReference>
             </value>
         </inputAssignments>
         <object>Order_Line__Share</object>
@@ -305,4 +328,12 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
+    <variables>
+        <name>orderLineRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Order_Line__c</objectType>
+    </variables>
 </Flow>

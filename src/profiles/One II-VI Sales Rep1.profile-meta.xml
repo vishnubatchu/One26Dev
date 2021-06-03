@@ -9,6 +9,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AccountTriggerHelperTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AddRatePlanController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -289,6 +293,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>GlobalParentOwnerBatchScheduler_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>GlobalParentOwnerBatch_Helper</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -313,7 +321,27 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>IndividualRecordHelper</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IndividualRecordHelperTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>JenkinsTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>JsonUtilities</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LeadGDPRController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LeadTriggerTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -573,6 +601,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>OrderRatePlanControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>OrderRatePlan_Controller</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -642,6 +674,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>QuoteRatePlan_Controller</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>QuoteRatePlan_ControllerTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -766,6 +802,18 @@
     </classAccesses>
     <classAccesses>
         <apexClass>UpdateGlobalUltimateParentBatch</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>UpdateGlobalUltimateParentBatchHelper</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>UpdateGlobalUltimateParentBatchScheduler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>UpdateGlobalUltimateParentBatchTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1104,6 +1152,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.Glovia_Region_Country__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Glovia_Region_State__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Glovia_Region__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.GrandParentId__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -1316,21 +1379,6 @@
         <editable>false</editable>
         <field>Account.Rating</field>
         <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.Region_Country__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.Region_State__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Region__c</field>
-        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -4350,6 +4398,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Lead.Market__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.Marketing_Communication_Opt_Out__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10662,11 +10715,11 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
-        <flow>Case</flow>
+        <flow>Case_RMA_Driver_Process</flow>
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
-        <flow>Case_RMA_Driver_Process</flow>
+        <flow>Case_Record_Triggered_Flow</flow>
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
@@ -10927,6 +10980,10 @@
     <flowAccesses>
         <enabled>false</enabled>
         <flow>Update_RMA_Request_Case_Approvers</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
+        <flow>Update_RMA_Request_Case_Approvers_for_case</flow>
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>

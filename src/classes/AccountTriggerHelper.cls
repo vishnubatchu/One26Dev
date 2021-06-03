@@ -133,41 +133,17 @@ insert att;*/
         }
     }
     
-    
-    
-    /* This method checks if the Account Name for accounts where Record Type = Global Parent is unique,
-     * else throws an error message  
+    /*
+     * Created by : Pooja U
+     * Date : 24th May 2021
+     * Description: When Account(with 'Global Parent' recordtype) owner changes,this method queries all sub accounts associated to GlobalParentAccount
+     *  and populates Global_Parent_Previous_Owner__c field 
      */
-    /*public static void chckGlblPrntAccDplct(List<Account> newAccounts){
-        set<String> newAccountNameSet = new set<String>();
-        for(Account newAccount : newAccounts){
-            newAccountNameSet.add(newAccount.Name);
-        }      
-        List<Account> existingAccounts = [SELECT Id,Name FROM Account WHERE Name IN :newAccountNameSet and RecordType.Name='Global Parent'];
-
-        if(existingAccounts!=null && !existingAccounts.isEmpty()){
-            Map<String,Id> existingAccountNameMap=new Map<String,Id>();
-          
-            for(Account eachExistingAccount : existingAccounts){
-                existingAccountNameMap.put(eachExistingAccount.Name,eachExistingAccount.Id);
-            }
-            for(Account eachNewAccount : newAccounts){
-                if(existingAccountNameMap.containsKey(eachNewAccount.Name) && eachNewAccount.RecordTypeId==
-                   Schema.SObjectType.Account.getRecordTypeInfosByName().get('Global Parent').getRecordTypeId()){
-                    eachNewAccount.addError('There is an existing account with this name.');
-                }
-            	
-        	} 
-            
-        }
-    }*/
-	
     public static void updateGlblPrntPrevOwner(List<Account> newAccounts,Map<Id, Account> oldAccountMap){
         List<Account> globalPreviousOwnerAccLst=new List<Account>();
         Set<Id> globalParentAccIdSet=new Set<Id>();
         for(Account eachAcc:newAccounts){
             if(eachAcc.RecordTypeId == Schema.SObjectType.Account.getRecordTypeInfosByName().get('Global Parent').getRecordTypeId() && oldAccountMap.get(eachAcc.Id).OwnerId!=eachAcc.OwnerId){
-                System.debug('Inside if');
                 Account globalParentAcc=new Account();
                 globalParentAcc.Id=eachAcc.Id;
                 globalParentAcc.Global_Parent_Previous_Owner__c=oldAccountMap.get(eachAcc.Id).OwnerId;

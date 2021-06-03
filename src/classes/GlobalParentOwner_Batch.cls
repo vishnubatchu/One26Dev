@@ -1,6 +1,8 @@
 public class GlobalParentOwner_Batch implements Database.Batchable<sObject>,Database.Stateful{
-	List<Account> failedAccountRecords = new List<Account>();
-    List<Account> successfullyProcessedAccounts = new List<Account>();
+    List<GlobalParentOwnerBatch_Helper.CustomError> finalErrorList=new List<GlobalParentOwnerBatch_Helper.CustomError>();
+    List<Account> accountListToUpdate=new List<Account>();
+	string csvHeader = 'Record Id,Object Name,Operation, Error \n';
+    string mainContent = csvHeader;
     public Database.QueryLocator start(Database.BatchableContext bc) {
         // collect the batches of records or objects to be passed to execute
         System.debug('start(Database.BatchableContext) - start');
@@ -13,46 +15,29 @@ public class GlobalParentOwner_Batch implements Database.Batchable<sObject>,Data
         System.debug('accountList'+accountList.size());
         // process each batch of records
         if(accountList!=null && !accountList.isEmpty()){
-            try{
-            Map<String,List<SObject>> shareRecordsMap=GlobalParentOwnerBatch_Helper.getShareRcrdsTobeDeletedOrInserted(accountList,true);
-            System.debug('shareRecordsMap==>'+shareRecordsMap);
-            if(shareRecordsMap!=null && !shareRecordsMap.isEmpty()){
-                List<Sobject> listOfShareRecTobeDeleted=new List<Sobject>();
-                List<Sobject> listOfShareRecTobeInserted=new List<Sobject>();
-                if(shareRecordsMap.containsKey('deleteList') && shareRecordsMap.get('deleteList')!=null
-                   && !shareRecordsMap.get('deleteList').isEmpty()){
-                       listOfShareRecTobeDeleted.addAll(shareRecordsMap.get('deleteList'));
-                   }
-                 if(shareRecordsMap.containsKey('insertList') && shareRecordsMap.get('insertList')!=null
-                   && !shareRecordsMap.get('insertList').isEmpty()){
-                       listOfShareRecTobeInserted.addAll(shareRecordsMap.get('insertList'));
-                   }
-                if(!listOfShareRecTobeDeleted.isEmpty() && !listOfShareRecTobeInserted.isEmpty()){
-                    
-                   	delete  listOfShareRecTobeDeleted;
-                    insert listOfShareRecTobeInserted;
-                    
-                }else if(!listOfShareRecTobeInserted.isEmpty()){
-                    insert listOfShareRecTobeInserted;
+            accountListToUpdate.addAll(accountList);
+            List<GlobalParentOwnerBatch_Helper.CustomError> errorList=GlobalParentOwnerBatch_Helper.deleteAndInsertShareRecords(accountList,true);
+            //system.debug(errorList);
+            if(errorList!=null && !errorList.isEmpty()){
+                finalErrorList.addAll(errorList);
+                for(GlobalParentOwnerBatch_Helper.CustomError eachError:errorList){
+                    string errStr = eachError.id+','+eachError.objectName+','+eachError.operation+','+eachError.message +'\n';
+                    mainContent += errStr;
                 }
-                
             }
-              successfullyProcessedAccounts.addAll(accountList);  
-            }catch(Exception excpn){
-                System.debug('Exception occured==>'+excpn.getMessage());
-                failedAccountRecords.addAll(accountList);
-            }
-        
         }
         System.debug('execute(Database.BatchableContext,List<Account>) - end');
     }
     public void finish(Database.BatchableContext bc){
         // execute any post-processing operations
-        if(successfullyProcessedAccounts!=null && !successfullyProcessedAccounts.isEmpty()){
-            for(Account eachAcc:successfullyProcessedAccounts){
+        if(finalErrorList!=null && !finalErrorList.isEmpty()){
+             GlobalParentOwnerBatch_Helper.sendEmail(mainContent);
+        }
+        if(accountListToUpdate!=null && !accountListToUpdate.isEmpty()){
+            for(Account eachAcc:accountListToUpdate){
                 eachAcc.Global_Parent_Previous_Owner__c=null;
             }
-            update successfullyProcessedAccounts;
+            update accountListToUpdate;
         }
     }
     

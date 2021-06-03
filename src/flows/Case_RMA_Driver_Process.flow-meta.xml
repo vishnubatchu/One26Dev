@@ -63,14 +63,14 @@ Thanks</stringValue>
         <processMetadataValues>
             <name>flowSelection</name>
             <value>
-                <stringValue>Update RMA Request (Case Approvers)</stringValue>
+                <stringValue>Update RMA Request (Case Approvers) for case</stringValue>
             </value>
         </processMetadataValues>
         <name>myRule_22_A1</name>
         <label>Update Case Approvers Lookups</label>
         <locationX>2200</locationX>
         <locationY>200</locationY>
-        <actionName>Update_RMA_Request_Case_Approvers</actionName>
+        <actionName>Update_RMA_Request_Case_Approvers_for_case</actionName>
         <actionType>flow</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -1552,7 +1552,7 @@ Thanks</stringValue>
                 <stringValue>Text([Case].Case_Status__c )</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_20_myRule_18_A1_5010473226</name>
+        <name>formula_20_myRule_18_A1_6877982681</name>
         <dataType>String</dataType>
         <expression>Text({!myVariable_current.Case_Status__c} )</expression>
     </formulas>
@@ -1592,7 +1592,7 @@ ISPICKVAL({!myVariable_current.Status},&apos;Pending RMA Admin Review&apos;),
 {!myVariable_current.CFO_Approved__c} =True,
 NOT(ISPICKVAL({!$User.UserType}, &apos;PowerPartner&apos;) ))</expression>
     </formulas>
-    <interviewLabel>Case_RMA_Driver_Process-21_InterviewLabel</interviewLabel>
+    <interviewLabel>Case_RMA_Driver_Process-22_InterviewLabel</interviewLabel>
     <label>Case/RMA Driver Process</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -1947,7 +1947,7 @@ NOT(ISPICKVAL({!$User.UserType}, &apos;PowerPartner&apos;) ))</expression>
             </processMetadataValues>
             <field>Status</field>
             <value>
-                <elementReference>formula_20_myRule_18_A1_5010473226</elementReference>
+                <elementReference>formula_20_myRule_18_A1_6877982681</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>

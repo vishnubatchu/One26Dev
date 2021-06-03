@@ -2,11 +2,11 @@ trigger ContactTrigger on Contact (before insert,before update, before delete,af
     
     if( trigger.isBefore){
         if( trigger.isInsert ){
-            ContactForGDPR.checkCountry(trigger.new);
+          //  ContactForGDPR.checkCountry(trigger.new);
             ContactForGDPR.checkMarketingCommunication(trigger.new);
         } 
         if(trigger.isUpdate) {
-            ContactForGDPR.checkCountry(trigger.new);
+          //  ContactForGDPR.checkCountry(trigger.new);
             List<Contact> newCon= new List<Contact>();
             for(Contact c:trigger.new){
                Contact oldCon = Trigger.oldMap.get(c.ID);

@@ -67,7 +67,7 @@
             <value>60 - Power Generation</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Account.Region__c</field>
+            <field>Account.Glovia_Region__c</field>
             <operation>notEqual</operation>
             <value>MIE</value>
         </criteriaItems>
@@ -137,7 +137,7 @@
             <value>Customer</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Account.Region__c</field>
+            <field>Account.Glovia_Region__c</field>
             <operation>equals</operation>
             <value>MIE</value>
         </criteriaItems>
