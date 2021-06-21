@@ -245,7 +245,7 @@
             <targetReference>get_Case_Approvers</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>CaseApprover</name>
         <dataType>SObject</dataType>

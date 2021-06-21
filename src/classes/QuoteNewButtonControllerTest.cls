@@ -3,8 +3,10 @@ public class QuoteNewButtonControllerTest {
     @isTest
     static void createQuote(){ 
          PageReference pageRef = Page.QuoteNewButtonPage;
-        Account acc = new Account(name='Account ', 
-                                  billingcity='New York', billingcountry='USA',Status__c='Active',Type='Customer',RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Top Level Account').getRecordTypeId());
+        Account globalParentAcc=new Account(Name='Global Parent Test Acc',Display_Shipping_Country__c ='United States',   Display_Billing_Country__c = 'United States',RecordTypeId=Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Global_Parent').getRecordTypeId()	);
+        insert globalParentAcc;
+        Account acc = new Account(name='Account ', Display_Shipping_Country__c ='United States',   Display_Billing_Country__c = 'United States',
+                                  billingcity='New York', ParentId =globalParentAcc.id, billingcountry='USA',Status__c='Active',Type='Customer',RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Top Level Account').getRecordTypeId());
         
         insert acc;
         Profile p = [SELECT Id FROM Profile WHERE Name = 'System Administrator' LIMIT 1];
@@ -20,6 +22,7 @@ public class QuoteNewButtonControllerTest {
         Quote qrec = new Quote(Account__c=acc.id);
         List<String> acclist = new List<String>();
         acclist.add(String.valueof(acc.id));
+        string AccIds = String.valueof(acc.id);
         Test.startTest();
         
         QuoteNewButtonController.saveQuote(acclist);
@@ -28,6 +31,7 @@ public class QuoteNewButtonControllerTest {
         QuoteNewButtonController controller = new QuoteNewButtonController(sc); 
         controller.redirect();
         QuoteNewButtonController.getOpportunityRec(opp.id);
+        QuoteNewButtonController.saveQuote1(AccIds);
         Test.stopTest();
     }
     

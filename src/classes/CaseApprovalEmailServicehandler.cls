@@ -25,6 +25,7 @@ global class  CaseApprovalEmailServicehandler  implements Messaging.InboundEmail
            // Group groupObj= [Select id,name from group where type ='Queue' and name ='CFO Queue'];
              Case caseObj = [Select id, CFO_User__c from case where id =:  headerID];
            Case_Approvers__mdt  cA = [SELECT MasterLabel,CFO_User__c FROM Case_Approvers__mdt  WHERE MasterLabel = 'Case BU GM Approvers'];
+           system.debug('Case_Approvers__mdt ' + cA);
             User u = [select id, Email from User where Email =: cA.CFO_User__c Limit 1];
             List <ProcessInstanceWorkitem > pItemRecordList = New List<ProcessInstanceWorkitem>([Select Id,ActorId,ProcessInstance.TargetObjectId from ProcessInstanceWorkitem where ProcessInstance.TargetObjectId =:headerID and ActorId =:u.id Limit 1]);
            

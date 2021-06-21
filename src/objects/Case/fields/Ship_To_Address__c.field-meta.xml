@@ -6,7 +6,7 @@
     <externalId>false</externalId>
     <label>Ship-To Address</label>
     <lookupFilter>
-        <active>true</active>
+        <active>false</active>
         <filterItems>
             <field>Account.RecordType.Name</field>
             <operation>equals</operation>

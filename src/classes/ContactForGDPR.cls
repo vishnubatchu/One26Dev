@@ -151,7 +151,7 @@ return null;
     {
         Map<Id,List<Contact>> accountContactMap = new Map<Id,List<Contact>>();
         List<Contact> contactlist = new List<Contact>();
-        List<Account> acclist = [select id,(Select id,AccountId,Account.Type,Party_Account__c,GDPR_Country__c,Marketing_Communication_Opt_Out__c 
+        List<Account> acclist = [select id,(Select id,Display_Mailing_Country__c,AccountId,Account.Type,Party_Account__c,GDPR_Country__c,Marketing_Communication_Opt_Out__c 
                                             from contacts) 
                                  from account
                                  where id IN:accountId];

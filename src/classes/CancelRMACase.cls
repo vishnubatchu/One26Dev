@@ -6,7 +6,7 @@ public class CancelRMACase {
         String endCustomer ='';
         Case caseRec = [select id,Return_Reason__c,RMA_PO__c,(select id,name,Error_Message__c,Return_Reason__c,PO_Price__c,Org_Code__c,Amount__c,End_Customer__c from 
                                                               RMA_Request_Lines__r) from case where id=:recordId];
-        
+        system.debug('caseList@@@@ ' + caseRec);
         RMA_Request_Line__c rmaLine = new RMA_Request_Line__c();
         rmaLine = caseRec.RMA_Request_Lines__r[0];
         

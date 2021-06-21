@@ -9,12 +9,13 @@ public class QuoteLineItemTriggerHelper {
                                           }
         for(Quote_Item__c  item : lineItems){
             if(item.CurrencyIsoCode  != item.TQ_Currency__c && item.TQ_Currency__c != null){
-                system.debug('item.UnitPrice '+item.Target_Price__c  );
+                system.debug('item.UnitPrice '+item.UnitPrice__c);
                /* if(item.UnitPrice != 0){
                     system.debug('item.Transfer_Currency_Amount__c'+item.Transfer_Currency_Amount__c);
                     item.Transfer_Currency_Amount__c = (item.UnitPrice/rateConvertionMap.get(item.CurrencyIsoCode)) * rateConvertionMap.get(item.TQ_Currency__c) ;
                 } else */if(item.Transfer_Currency_Amount__c != null){
                     system.debug('item.Transfer_Currency_Amount__c'+item.Transfer_Currency_Amount__c);
+                    item.UnitPrice__c   = (item.Transfer_Currency_Amount__c / rateConvertionMap.get(item.TQ_Currency__c)) * rateConvertionMap.get(item.CurrencyIsoCode);
                     item.Target_Price__c   = (item.Transfer_Currency_Amount__c / rateConvertionMap.get(item.TQ_Currency__c)) * rateConvertionMap.get(item.CurrencyIsoCode);
                 }
                 
@@ -34,6 +35,7 @@ public class QuoteLineItemTriggerHelper {
             Quote_Item__c  oldItem = oldLineItems.get(newItem.Id);
             if(newItem.TQ_Currency__c != null && newItem.CurrencyIsoCode != newItem.TQ_Currency__c){
                 if(oldItem.Transfer_Currency_Amount__c != newItem.Transfer_Currency_Amount__c){
+                    newItem.UnitPrice__c   = (newItem.Transfer_Currency_Amount__c / rateConvertionMap.get(newItem.TQ_Currency__c)) * rateConvertionMap.get(newItem.CurrencyIsoCode);
                     newItem.Target_Price__c   = (newItem.Transfer_Currency_Amount__c / rateConvertionMap.get(newItem.TQ_Currency__c)) * rateConvertionMap.get(newItem.CurrencyIsoCode);
                 }
              /*   if(oldItem.UnitPrice != newItem.UnitPrice){
@@ -56,7 +58,8 @@ public class QuoteLineItemTriggerHelper {
                                          FROM QuoteRatePlan__c 
                                          WHERE QuoteLineItem__c IN : updateMap.keySet() order BY SequenceNumber__c]){
                                              if(updateMap.get(rate.QuoteLineItem__c).Quantity__c  >= rate.SequenceNumber__c){
-                                                 updateMap.get(rate.QuoteLineItem__c).Quantity__c  = rate.SalesPrice__c;
+                                                 updateMap.get(rate.QuoteLineItem__c).UnitPrice__c = rate.SalesPrice__c;
+                                                 updateMap.get(rate.QuoteLineItem__c).Target_Price__c  = rate.SalesPrice__c;
                                              } 
                                          }
         }

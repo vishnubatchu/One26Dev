@@ -1146,6 +1146,16 @@
             <field>Part_Number__c.Marketing_P_N__c</field>
             <table>Order.RMA_Lines__r</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Line_Description__c</field>
+            <table>Order.RMA_Lines__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Long_Text_Description__c</field>
+            <table>Order.RMA_Lines__r</table>
+        </columns>
         <masterLabel>Order Lines</masterLabel>
     </sections>
     <sections>

@@ -6,7 +6,7 @@
     <inlineHelpText>For Disti Quotes, please select a Distributor .  Sales Channel will automatically populate if you select a Sales Channel Code.</inlineHelpText>
     <label>Sales Channel</label>
     <lookupFilter>
-        <active>true</active>
+        <active>false</active>
         <filterItems>
             <field>Account.Type</field>
             <operation>equals</operation>

@@ -23,7 +23,7 @@ public class QuoteLineItemController {
         //Added for WSS 
         List<Id> products = new List<Id>();
         for(Quote_Item__c lItem :ListLineItem){
-            products.add(lItem.Product__r.Id);
+            products.add(lItem.Product__c);
         }
         Set<String> wssBuCodes = new Set<String>();
         Set<String> nonWssBuCodes = new Set<String>();
@@ -128,8 +128,9 @@ All error messages are concatenated and return in end. */
             servicesInformaticaComRtPrcCaiQuot QuoteRequestInf = new servicesInformaticaComRtPrcCaiQuot();
             servicesInformaticaComRtPrcCaiQuot.prc_cai_quote_main_Service Quoteservicesend = new  servicesInformaticaComRtPrcCaiQuot.prc_cai_quote_main_Service();
             system.debug('test '+lRec);
-            servicesInformaticaComRtPrcCaiQuot.prc_cai_quote_mainResponse_element response =Quoteservicesend.prc_cai_quote_main(Quoteid);
-            system.debug('test '+lRec);
+             system.debug('test@@@12 '+ [Select id,Initial_Error_Message__c,Name from Quote_Item__c]);
+           servicesInformaticaComRtPrcCaiQuot.prc_cai_quote_mainResponse_element response =Quoteservicesend.prc_cai_quote_main(Quoteid);
+            system.debug('test@@@12 '+ [Select id,Initial_Error_Message__c,Name from Quote_Item__c]);
             List<Quote_Item__c> newQuoteList =[Select id,Initial_Error_Message__c,Name from Quote_Item__c where Quote__c =:Quoteid];
             if(newQuoteList.size()>0) {
                 Boolean isInitialErrorPresent = False;

@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>REACH__c</fullName>
     <externalId>false</externalId>
-    <formula>IF(ISBLANK( Opportunity.Id ),&apos;&apos;, TEXT(Opportunity.REACH__c))</formula>
+    <formula>IF(ISBLANK( OpportunityId ),&apos;&apos;, TEXT(Opportunity.REACH__c))</formula>
     <label>REACH</label>
     <required>false</required>
     <type>Text</type>

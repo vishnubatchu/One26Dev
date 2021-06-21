@@ -1,6 +1,6 @@
 /**
      * Created by : Akhilesh
-     * Date : 30th May 2021
+     * Date : 31th May 2021
      * Description: This Batch class has implemented as per below logic
      * a) If the Global Ultimate Parent is changed on a Top-Level Account or a Customer that serves as the immediate parent of a child account, then the child’s Global Ultimate Parent should match that of its immediate paren.
      * b) When the Global_Ultimate_Parent__c is changed on an Account that is populated in Opportunity.AccountId, Quote.AccountId, 
@@ -31,7 +31,7 @@ global class UpdateGlobalUltimateParentBatch implements Database.Batchable <sObj
         system.debug('Quesry ' + query);
         return Database.getQueryLocator(query);
     }
-    //Exicute Method : Updating all the child account , and related Quote,order,Opportunity "Global_Ultimate_Account__c" and calling "GlobalParentOwnerBatch_Helper" with list of accoun. 
+    //Execute Method : Updating all the child account , and related Quote,order,Opportunity "Global_Ultimate_Account__c" and calling "GlobalParentOwnerBatch_Helper" with list of account. 
     global void execute(Database.BatchableContext BC,List<sObject> batch)
     {
       csvBody += UpdateGlobalUltimateParentBatchHelper.UpdateGlobalParent(batch,globalMap).csvBody;

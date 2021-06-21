@@ -47,7 +47,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Contact Email Trigger Condition</shortDescription>
-        <value>False</value>
+        <value>false</value>
     </labels>
     <labels>
         <fullName>Default_PLM_User_Email</fullName>
@@ -175,7 +175,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Integration UserId</shortDescription>
-        <value>0053l00000Actxb</value>
+        <value>0052g000001lCRTAA2</value>
     </labels>
     <labels>
         <fullName>Invalid_ECO_Number_Message</fullName>
