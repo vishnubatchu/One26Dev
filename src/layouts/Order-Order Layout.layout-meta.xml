@@ -80,6 +80,10 @@
                 <behavior>Edit</behavior>
                 <field>Legacy_Salesforce_Id__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>MDR_Key__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

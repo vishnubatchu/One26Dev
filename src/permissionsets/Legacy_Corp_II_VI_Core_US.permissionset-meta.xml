@@ -237,6 +237,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.Global_Ultimate_Account_Change_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Global_Ultimate_Parent_Owner_Change_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.Global_Ultimate_Parent__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -5687,6 +5697,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Order.MDR_Key__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Order.Name</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -6418,6 +6433,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Order_Line__c.Lot_Number__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order_Line__c.MDR_Key__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9537,4 +9557,8 @@
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Legacy Corp II-VI Core US</label>
+    <recordTypeVisibilities>
+        <recordType>Opportunity.Aftermarket</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
 </PermissionSet>

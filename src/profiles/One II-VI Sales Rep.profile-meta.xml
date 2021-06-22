@@ -1247,6 +1247,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.Global_Ultimate_Account_Change_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Global_Ultimate_Parent_Owner_Change_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.Global_Ultimate_Parent__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1516,7 +1526,7 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.Salesforce_Legacy_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6781,6 +6791,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.MDR_Key__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Order.Name</field>
         <readable>false</readable>
@@ -7514,6 +7529,11 @@
         <editable>false</editable>
         <field>Order_Line__c.Lot_Number__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order_Line__c.MDR_Key__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>

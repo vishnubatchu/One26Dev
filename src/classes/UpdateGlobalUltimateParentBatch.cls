@@ -1,12 +1,12 @@
 /**
-     * Created by : Akhilesh
-     * Date : 31th May 2021
-     * Description: This Batch class has implemented as per below logic
-     * a) If the Global Ultimate Parent is changed on a Top-Level Account or a Customer that serves as the immediate parent of a child account, then the child’s Global Ultimate Parent should match that of its immediate paren.
-     * b) When the Global_Ultimate_Parent__c is changed on an Account that is populated in Opportunity.AccountId, Quote.AccountId, 
-     * and Order.AccountId, a batch class properly updates Opportunity.Global_Ultimate_Account__c, 
-     * Quote.Global_Ultimate_Account__c, and Order.Global_Ultimate_Account__c to reflect the Account’s Global_Ultimate_Parent__c
-     */
+* Created by : Akhilesh
+* Date : 31th May 2021
+* Description: This Batch class has implemented as per below logic
+* a) If the Global Ultimate Parent is changed on a Top-Level Account or a Customer that serves as the immediate parent of a child account, then the child’s Global Ultimate Parent should match that of its immediate paren.
+* b) When the Global_Ultimate_Parent__c is changed on an Account that is populated in Opportunity.AccountId, Quote.AccountId, 
+* and Order.AccountId, a batch class properly updates Opportunity.Global_Ultimate_Account__c, 
+* Quote.Global_Ultimate_Account__c, and Order.Global_Ultimate_Account__c to reflect the Account’s Global_Ultimate_Parent__c
+*/
 global class UpdateGlobalUltimateParentBatch implements Database.Batchable <sObject>,Database.Stateful{ 
     global String query;
     global map<id,Account> globalMap = new map<id,Account>();
@@ -16,7 +16,7 @@ global class UpdateGlobalUltimateParentBatch implements Database.Batchable <sObj
     global string headerValue;
     global  List<GlobalParentOwnerBatch_Helper.CustomError> errorList = new List<GlobalParentOwnerBatch_Helper.CustomError>();
     //Header and body for faild record CSV file.
-     global UpdateGlobalUltimateParentBatch(){
+    global UpdateGlobalUltimateParentBatch(){
         csvBody = '';
         headerValue = 'Id,object, Error Message \n';
     }
@@ -34,7 +34,7 @@ global class UpdateGlobalUltimateParentBatch implements Database.Batchable <sObj
     //Execute Method : Updating all the child account , and related Quote,order,Opportunity "Global_Ultimate_Account__c" and calling "GlobalParentOwnerBatch_Helper" with list of account. 
     global void execute(Database.BatchableContext BC,List<sObject> batch)
     {
-      csvBody += UpdateGlobalUltimateParentBatchHelper.UpdateGlobalParent(batch,globalMap).csvBody;
+        csvBody += UpdateGlobalUltimateParentBatchHelper.UpdateGlobalParent(batch,globalMap).csvBody;
         allAccSuccessId.addAll(UpdateGlobalUltimateParentBatchHelper.UpdateGlobalParent(batch,globalMap).allAccSuccessId);
     }
     
@@ -42,31 +42,36 @@ global class UpdateGlobalUltimateParentBatch implements Database.Batchable <sObj
     global void finish(Database.BatchableContext BC) {
         //send Email
         String finalCsv = '';
-                    if(csvBody != null && csvBody != ''){
-                        finalCsv = headerValue + csvBody;
-                    }
-                    if( finalCsv != null && finalCsv != ''){
-                        String csvname= 'GlobalParentAccount_Update_Errors.csv';
-                        Messaging.EmailFileAttachment csvAttc = new Messaging.EmailFileAttachment();
-                        csvAttc.setFileName(csvname);
-                        csvAttc.setBody(Blob.valueOf(finalCsv));
-                        list<string> toAddresses = new list<string>();
-                        Profile sys_adm_profile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
-                        for(user u : [SELECT id, Email FROM User WHERE ProfileId =:sys_adm_profile.Id]){
-                           toAddresses.add(u.Email); 
-                        }
-                        String subject ='Account Update Error:';    
-                        Messaging.SingleEmailMessage email =new Messaging.SingleEmailMessage();
-                        email.setSubject(subject);
-                        email.setToAddresses(toAddresses );
-                        email.setPlainTextBody('PFA error file attached.');
-                        email.setFileAttachments(new Messaging.EmailFileAttachment[]{csvAttc});
-                        try{
-                            Messaging.SendEmailResult [] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
-                        }catch(Exception e){
-                            
-                        }
-                    }   
+        if(csvBody != null && csvBody != ''){
+            finalCsv = headerValue + csvBody;
+        }
+        if( finalCsv != null && finalCsv != ''){
+            String csvname= 'GlobalParentAccount_Update_Errors.csv';
+            Messaging.EmailFileAttachment csvAttc = new Messaging.EmailFileAttachment();
+            csvAttc.setFileName(csvname);
+            csvAttc.setBody(Blob.valueOf(finalCsv));
+            List<String> toEmailIdList=new List<String>();
+            String toEmailIdStr=System.Label.Global_Parent_Owner_Account_Update_Batch_Notification_EmaildId;
+            if(toEmailIdStr!=null && toEmailIdStr.trim()!=''){
+                if(toEmailIdStr.contains(',')){
+                    toEmailIdList=toEmailIdStr.split(',');
+                }else{
+                    toEmailIdList.add(toEmailIdStr);
+                }
+            }
+            String[] toAddresses = toEmailIdList; 
+            String subject ='Account Update Error:';    
+            Messaging.SingleEmailMessage email =new Messaging.SingleEmailMessage();
+            email.setSubject(subject);
+            email.setToAddresses(toAddresses );
+            email.setPlainTextBody('PFA error file attached.');
+            email.setFileAttachments(new Messaging.EmailFileAttachment[]{csvAttc});
+            try{
+                Messaging.SendEmailResult [] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
+            }catch(Exception e){
+                
+            }
+        }   
         list<Account> finaAccllist = [select id,Global_Parent_Updated__c from Account where id in:allAccSuccessId];
         list<Account> ResetFlaglist = new list<Account>();
         if(finaAccllist.size() > 0 && finaAccllist != null){
@@ -76,7 +81,7 @@ global class UpdateGlobalUltimateParentBatch implements Database.Batchable <sObj
                 ResetFlaglist.add(reset); 
             }
             try{
-            update ResetFlaglist;
+                update ResetFlaglist;
             }catch(Exception e){
                 system.debug('**Error at line number---'+e.getLineNumber() + ' - '+ e.getMessage());
             }

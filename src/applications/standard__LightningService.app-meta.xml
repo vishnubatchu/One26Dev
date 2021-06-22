@@ -211,7 +211,7 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Case</recordType>
         <type>Flexipage</type>
-        <profile>Sales Profile</profile>
+        <profile>Sales Profile Clone</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -364,7 +364,7 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.RMA_Request</recordType>
         <type>Flexipage</type>
-        <profile>Sales Profile</profile>
+        <profile>Sales Profile Clone</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>

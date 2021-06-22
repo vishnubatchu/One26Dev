@@ -261,7 +261,7 @@
         <pageOrSobjectType>Loaner__c</pageOrSobjectType>
         <recordType>Loaner__c.Loaner_Extension_Read_Only</recordType>
         <type>Flexipage</type>
-        <profile>Sales Profile</profile>
+        <profile>Sales Profile Clone</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -513,7 +513,7 @@
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Order</pageOrSobjectType>
         <type>Flexipage</type>
-        <profile>Sales Profile</profile>
+        <profile>Sales Profile Clone</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -540,7 +540,7 @@
         <pageOrSobjectType>Loaner__c</pageOrSobjectType>
         <recordType>Loaner__c.Loaner_Request_Read_Only</recordType>
         <type>Flexipage</type>
-        <profile>Sales Profile</profile>
+        <profile>Sales Profile Clone</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -611,7 +611,7 @@
         <pageOrSobjectType>Order</pageOrSobjectType>
         <recordType>Order.PoS_Order</recordType>
         <type>Flexipage</type>
-        <profile>Sales Profile</profile>
+        <profile>Sales Profile Clone</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -773,7 +773,7 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Case</recordType>
         <type>Flexipage</type>
-        <profile>Sales Profile</profile>
+        <profile>Sales Profile Clone</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -818,7 +818,7 @@
         <pageOrSobjectType>Order</pageOrSobjectType>
         <recordType>Order.RMA_Order</recordType>
         <type>Flexipage</type>
-        <profile>Sales Profile</profile>
+        <profile>Sales Profile Clone</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -860,7 +860,7 @@
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Loaner__c</pageOrSobjectType>
         <type>Flexipage</type>
-        <profile>Sales Profile</profile>
+        <profile>Sales Profile Clone</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -887,7 +887,7 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.RMA_Request</recordType>
         <type>Flexipage</type>
-        <profile>Sales Profile</profile>
+        <profile>Sales Profile Clone</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -1151,7 +1151,7 @@
         <pageOrSobjectType>Loaner__c</pageOrSobjectType>
         <recordType>Loaner__c.Loaner_Request</recordType>
         <type>Flexipage</type>
-        <profile>Sales Profile</profile>
+        <profile>Sales Profile Clone</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -1295,7 +1295,7 @@
         <pageOrSobjectType>Loaner__c</pageOrSobjectType>
         <recordType>Loaner__c.Loaner_Extension</recordType>
         <type>Flexipage</type>
-        <profile>Sales Profile</profile>
+        <profile>Sales Profile Clone</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -1433,7 +1433,7 @@
         <pageOrSobjectType>Order_Line__c</pageOrSobjectType>
         <recordType>Order_Line__c.RMA_Order_Line</recordType>
         <type>Flexipage</type>
-        <profile>Sales Profile</profile>
+        <profile>Sales Profile Clone</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -1576,7 +1576,7 @@
         <pageOrSobjectType>Order</pageOrSobjectType>
         <recordType>Order.Sales_Order</recordType>
         <type>Flexipage</type>
-        <profile>Sales Profile</profile>
+        <profile>Sales Profile Clone</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -1922,7 +1922,7 @@
         <formFactor>Large</formFactor>
         <pageOrSobjectType>RMA_Request_Line__c</pageOrSobjectType>
         <type>Flexipage</type>
-        <profile>Sales Profile</profile>
+        <profile>Sales Profile Clone</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>

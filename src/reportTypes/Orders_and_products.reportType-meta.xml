@@ -455,6 +455,11 @@
             <field>Global_Ultimate_Account__c</field>
             <table>Order</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>MDR_Key__c</field>
+            <table>Order</table>
+        </columns>
         <masterLabel>Orders</masterLabel>
     </sections>
     <sections>
@@ -1196,6 +1201,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Long_Text_Description__c</field>
+            <table>Order.RMA_Lines__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>MDR_Key__c</field>
             <table>Order.RMA_Lines__r</table>
         </columns>
         <masterLabel>Order Lines</masterLabel>

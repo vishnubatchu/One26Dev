@@ -9,17 +9,20 @@
      */
 global class UpdateGlobalParentLookupsBatch implements Database.Batchable <sObject>,Database.Stateful{ 
 // Start method : Quering all the opportunity , order and quote if Global_Ultimate_Account__c is null
+global List<GlobalParentOwnerBatch_Helper.CustomError> errorList = new List<GlobalParentOwnerBatch_Helper.CustomError>();
     global List<sObject>  start(Database.BatchableContext BC)
     {
         List<sObject> scope = new List<sObject>();
-        scope.addAll([select id,Global_Ultimate_Account__c,Account.Global_Ultimate_Parent__c,AccountId  from Opportunity where Global_Ultimate_Account__c = null and AccountId != null]);
-        scope.addAll([select id,Global_Ultimate_Account__c, Account.Global_Ultimate_Parent__c,AccountId  from Order where Global_Ultimate_Account__c = null and AccountId != null]);
-        scope.addAll([select id,Global_Ultimate_Account__c,Account.Global_Ultimate_Parent__c,AccountId from Quote  where Global_Ultimate_Account__c = null and AccountId != null]);
+        scope.addAll([select id,Global_Ultimate_Account__c,Account.Global_Ultimate_Parent__c,Account.Global_Ultimate_Parent__r.OwnerId,Account.Changed_Global_Parent_Old_Owner__c,AccountId  from Opportunity where Global_Ultimate_Account__c = null and AccountId != null limit 20000]);
+        scope.addAll([select id,Global_Ultimate_Account__c, Account.Global_Ultimate_Parent__c,Account.Global_Ultimate_Parent__r.OwnerId,Account.Changed_Global_Parent_Old_Owner__c,AccountId  from Order where Global_Ultimate_Account__c = null and AccountId != null limit 20000]);
+        scope.addAll([select id,Global_Ultimate_Account__c,Account.Global_Ultimate_Parent__c,Account.Global_Ultimate_Parent__r.OwnerId,Account.Changed_Global_Parent_Old_Owner__c,AccountId from Quote  where Global_Ultimate_Account__c = null and AccountId != null limit 20000]);
         return scope;
     }
     // Execute method : update Global_Ultimate_Account__c field with parent Acccount Global_Ultimate_Account__c field value 
     global void execute(Database.BatchableContext BC,List<sObject> scope)
     {
+      
+        list<Account> acSharing = new list<Account>();
         list<Opportunity> updateOppList = new list<Opportunity>();
          list<Order> updateOrdList = new list<Order>();
          list<Quote> updateQtList = new list<Quote>();
@@ -31,16 +34,19 @@ global class UpdateGlobalParentLookupsBatch implements Database.Batchable <sObje
                 {
                     opp.Global_Ultimate_Account__c = opp.Account.Global_Ultimate_Parent__c ;
                     updateOppList.add(opp);
+                    acSharing.add(opp.Account);
                 }
                 when Order ord
                 {
                     ord.Global_Ultimate_Account__c = ord.Account.Global_Ultimate_Parent__c ;
                      updateOrdList.add(ord);
+                     acSharing.add(ord.Account);
                 }
                  when Quote qt
                 {
                     qt.Global_Ultimate_Account__c = qt.Account.Global_Ultimate_Parent__c ;
                     updateQtList.add(qt);
+                     acSharing.add(qt.Account);
                 }
              }
          }
@@ -53,9 +59,16 @@ global class UpdateGlobalParentLookupsBatch implements Database.Batchable <sObje
          if(updateQtList.size() > 0 && updateQtList != null ){
                 database.SaveResult[] oppResult=database.update(updateQtList,false);
         }
+
+        if(acSharing != null && acSharing.size() > 0){
+      errorList=GlobalParentOwnerBatch_Helper.deleteAndInsertShareRecords(acSharing,false); 
+       //database.SaveResult[] accResult=database.update(acSharing,false); 
+           
+        }
     }
     
     global void finish(Database.BatchableContext BC) {
-       
+  
+
     }
 }
