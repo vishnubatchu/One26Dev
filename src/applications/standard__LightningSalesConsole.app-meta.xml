@@ -103,7 +103,7 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Case</recordType>
         <type>Flexipage</type>
-        <profile>Sales Admin Profile</profile>
+        <profile>Sales Admin Profile Old</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -346,7 +346,7 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.RMA_Request</recordType>
         <type>Flexipage</type>
-        <profile>Sales Admin Profile</profile>
+        <profile>Sales Admin Profile Old</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>

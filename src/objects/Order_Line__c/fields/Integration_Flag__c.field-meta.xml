@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Secondary_Email__c</fullName>
-    <description>Secondary email address</description>
+    <fullName>Integration_Flag__c</fullName>
+    <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Business Secondary Email</label>
-    <required>false</required>
+    <label>Integration Flag</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
-    <type>Email</type>
-    <unique>false</unique>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
 </CustomField>

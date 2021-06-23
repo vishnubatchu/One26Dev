@@ -448,6 +448,16 @@
             <field>MDR_Key__c</field>
             <table>Order</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Integration_Flag__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Batch_Flag__c</field>
+            <table>Order</table>
+        </columns>
         <masterLabel>Orders</masterLabel>
     </sections>
     <sections>
@@ -1164,6 +1174,16 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>MDR_Key__c</field>
+            <table>Order.RMA_Lines__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Batch_Flag__c</field>
+            <table>Order.RMA_Lines__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Integration_Flag__c</field>
             <table>Order.RMA_Lines__r</table>
         </columns>
         <masterLabel>Order Lines</masterLabel>

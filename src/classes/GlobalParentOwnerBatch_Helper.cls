@@ -52,6 +52,7 @@ public class GlobalParentOwnerBatch_Helper {
                         }
                     }
                     if(!listOfShareRecTobeInserted.isEmpty()){
+                        system.debug('listOfShareRecTobeInserted@@@@@' + listOfShareRecTobeInserted.size());
                         Database.SaveResult[] srList = Database.insert(listOfShareRecTobeInserted, false);
                         // Iterate through each returned result
                         for (Database.SaveResult sr : srList) {

@@ -5537,6 +5537,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Order.Batch_Flag__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Order.BillToContactId</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -5663,6 +5668,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Order.Header_Hold_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.Integration_Flag__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5993,6 +6003,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Order_Line__c.Backlog_Quantity__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order_Line__c.Batch_Flag__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6328,6 +6343,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Order_Line__c.II_VI_DE_Long_Description__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order_Line__c.Integration_Flag__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

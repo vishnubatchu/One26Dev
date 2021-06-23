@@ -61,6 +61,7 @@ global List<GlobalParentOwnerBatch_Helper.CustomError> errorList = new List<Glob
         }
 
         if(acSharing != null && acSharing.size() > 0){
+            system.debug('acSharing@@@@@ ' + acSharing.size());
       errorList=GlobalParentOwnerBatch_Helper.deleteAndInsertShareRecords(acSharing,false); 
        //database.SaveResult[] accResult=database.update(acSharing,false); 
            
