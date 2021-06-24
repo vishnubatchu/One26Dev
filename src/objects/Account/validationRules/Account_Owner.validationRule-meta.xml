@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_Owner</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISCHANGED(OwnerId), NOT( $Permission.Change_Ownership ))</errorConditionFormula>
+    <errorMessage>You are not permitted to change the account owner.</errorMessage>
+</ValidationRule>

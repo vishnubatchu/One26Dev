@@ -126,6 +126,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.Customer_Industry_deprecated__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.Customer_Warranty__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -4877,6 +4882,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Marketing_PN__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Marlow_Product_BU__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

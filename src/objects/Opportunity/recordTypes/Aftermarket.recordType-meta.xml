@@ -1633,11 +1633,7 @@
     <picklistValues>
         <picklist>Market_Segment__c</picklist>
         <values>
-            <fullName>Consumer</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Datacom</fullName>
+            <fullName>Consumer Electronics</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1645,35 +1641,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Medical</fullName>
+            <fullName>LiDAR</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Military%2FAerospace</fullName>
+            <fullName>Semiconductor</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Other</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Security%2FSurveillance</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Telecom</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Test %26 Measurement</fullName>
+            <fullName>Sensing</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Transportation</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Video%2FBroadcast</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1713,6 +1693,25 @@
         </values>
         <values>
             <fullName>80 - Contracts</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Marlow_Product_BU__c</picklist>
+        <values>
+            <fullName>Components</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Power</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Systems</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2606,7 +2605,23 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
-            <fullName>Existing Business%2C Revenue Reduction</fullName>
+            <fullName>Existing Business %E2%80%93 Demand Already Forecasted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Existing Business - Follow-on</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Existing Business - Replacement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Business - Existing Customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Business - New Customer</fullName>
             <default>false</default>
         </values>
     </picklistValues>

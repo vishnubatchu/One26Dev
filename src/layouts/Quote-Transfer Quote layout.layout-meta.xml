@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <excludeButtons>CreateOrder</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -57,10 +58,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>opportunity_record_type__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>No_of_line_items__c</field>
             </layoutItems>
             <layoutItems>
@@ -76,10 +73,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>QuoteNumber__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Customer_ID__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

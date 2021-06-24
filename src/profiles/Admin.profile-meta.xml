@@ -698,6 +698,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>OrderAndOrderLineBatch_Helper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>OrderAndOrderLine_Batch</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1132,6 +1136,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.Customer_Industry__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Customer_Industry_deprecated__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5957,6 +5966,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Opportunity.Marketing_PN__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Marlow_Product_BU__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

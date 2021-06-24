@@ -66,7 +66,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Customer_Industry__c</field>
+                <field>Customer_Industry_deprecated__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -87,6 +87,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>UltimateParent__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Customer_Industry__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

@@ -238,6 +238,33 @@
     <picklistValues>
         <picklist>Customer_Industry__c</picklist>
         <values>
+            <fullName>Consumer Electronics</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Industrial</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LiDAR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Semiconductor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sensing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transportation</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Customer_Industry_deprecated__c</picklist>
+        <values>
             <fullName>Aerospace %26 Defense</fullName>
             <default>false</default>
         </values>

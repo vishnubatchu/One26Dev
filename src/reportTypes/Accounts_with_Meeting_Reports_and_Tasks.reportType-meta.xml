@@ -746,7 +746,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Customer_Industry__c</field>
+            <field>Customer_Industry_deprecated__c</field>
             <table>Account</table>
         </columns>
         <columns>
@@ -787,6 +787,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Changed_Global_Parent_Old_Owner__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Customer_Industry__c</field>
             <table>Account</table>
         </columns>
         <masterLabel>Accounts</masterLabel>
