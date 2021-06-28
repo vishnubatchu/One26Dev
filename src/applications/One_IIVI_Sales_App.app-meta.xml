@@ -67,6 +67,7 @@
     <label>One II-VI Sales App</label>
     <navType>Standard</navType>
     <tabs>standard-home</tabs>
+    <tabs>standard-Lead</tabs>
     <tabs>standard-Account</tabs>
     <tabs>standard-Contact</tabs>
     <tabs>standard-Opportunity</tabs>

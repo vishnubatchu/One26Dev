@@ -1,70 +1,207 @@
 public class OrderAndOrderLineBatch_Helper {
     
     //This method inserts share records
-    public static List<CustomError> updateOrderAndInsertShareRecords(List<Sobject> orderAndOrderLineList){
+    public static List<CustomError> updateOrderAndInsertShareRecords(List<Order> orderList,List<Order_Line__c>orderLineList){
         List<CustomError> errorList=new List<CustomError>();
-        if(orderAndOrderLineList!=null && !orderAndOrderLineList.isEmpty()){
+        if((orderList!=null && !orderList.isEmpty()) || (orderLineList!=null && !orderLineList.isEmpty())){
             try{
-                List<Order> orderListToUpdate=new List<Order>();
-                List<OrderShare> orderShrListTobeInsrtd=new List<OrderShare>();
-				List<Order_Line__Share> orderLineShrListTobeInsrtd=new List<Order_Line__Share>();
-                for(Sobject eachSobj:orderAndOrderLineList){
-                    if(eachSobj.Id.getSObjectType().getDescribe().getName()=='Order'){
-                        Order orderRec=(Order)eachSobj;
-                        if(orderRec.AccountId!=null && orderRec.Account.Global_Ultimate_Parent__c!=null){
-                            Order OrderRecTobeUpdated=new Order();
-                			OrderRecTobeUpdated.Id=orderRec.Id;
-                            OrderRecTobeUpdated.Global_Ultimate_Account__c=orderRec.Account.Global_Ultimate_Parent__c;
-                            orderListToUpdate.add(OrderRecTobeUpdated);
-                            if(orderRec.OwnerId!=orderRec.Account.Global_Ultimate_Parent__r.OwnerId){
-                                orderShrListTobeInsrtd.add(new OrderShare(OrderId=orderRec.Id,UserOrGroupId=orderRec.Account.Global_Ultimate_Parent__r.OwnerId,
-                                                                          RowCause='Manual',OrderAccessLevel='Read'));
-                            }
+                Map<String,List<SObject>> orderupdateAndShareRecordsMap=getRcrdsTobeUpdatedOrInserted(orderList,orderLineList);
+                if(orderupdateAndShareRecordsMap!=null && !orderupdateAndShareRecordsMap.isEmpty()){
+                    List<Sobject> orderListTobeUpdated=new List<Sobject>();
+                    List<Sobject> listOfShareRecTobeInserted=new List<Sobject>();
+                    Integer chunkSize=10000;
+                    if(orderupdateAndShareRecordsMap.containsKey('updateList') && orderupdateAndShareRecordsMap.get('updateList')!=null
+                       && !orderupdateAndShareRecordsMap.get('updateList').isEmpty()){
+                           orderListTobeUpdated.addAll(orderupdateAndShareRecordsMap.get('updateList'));
+                       }
+                    if(orderupdateAndShareRecordsMap.containsKey('insertList') && orderupdateAndShareRecordsMap.get('insertList')!=null
+                       && !orderupdateAndShareRecordsMap.get('insertList').isEmpty()){
+                           listOfShareRecTobeInserted.addAll(orderupdateAndShareRecordsMap.get('insertList'));
+                       }
+                    if(!orderListTobeUpdated.isEmpty()){
+                        List<List<Sobject>> orderRecTobeUpdtdInChunks=new List<List<Sobject>>();
+                        if(orderListTobeUpdated.size()>chunkSize){
+                            doSubList(orderListTobeUpdated, chunkSize, orderRecTobeUpdtdInChunks);
+                        }else{
+                            orderRecTobeUpdtdInChunks.add(orderListTobeUpdated);
                         }
-                    }else{
-                        Order_Line__c OrderLineRec=(Order_Line__c)eachSobj;
-                        if(OrderLineRec.Order__c!=null && 
-                           OrderLineRec.Order__r.AccountId!=null && OrderLineRec.Order__r.Account.Global_Ultimate_Parent__c!=null
-                          	&& OrderLineRec.OwnerId!=OrderLineRec.Order__r.Account.Global_Ultimate_Parent__r.OwnerId){
-							orderLineShrListTobeInsrtd.add(new Order_Line__Share(ParentId=OrderLineRec.Id,UserOrGroupId=OrderLineRec.Order__r.Account.Global_Ultimate_Parent__r.OwnerId,
-                                                                          RowCause='Manual',AccessLevel='Read'));
+                        for(List<Sobject> eachChunk:orderRecTobeUpdtdInChunks){
+                            // Delete the records
+                            Database.SaveResult[] srList = Database.update(eachChunk, false);
+                            Integer lstIndex=0;
+                            // Iterate through each returned result
+                            for(Database.SaveResult sr : srList) {
+                                if (!sr.isSuccess()) {
+                                    String message='';
+                                    // Operation failed, so get all errors                
+                                    for(Database.Error err : sr.getErrors()) {
+                                        message+= err.getMessage();
+                                    }
+                                    errorList.add(new CustomError(eachChunk[lstIndex].Id,'Order','Update',message));
+                                }
+                                lstIndex++;
+                            }
                         }
                     }
-                }
-                
-                List<SObject> listOfShareRecTobeInserted=new List<Sobject>();
-                
-                if(!listOfShareRecTobeInserted.isEmpty()){
-                    system.debug('listOfShareRecTobeInserted@@@@@' + listOfShareRecTobeInserted.size());
-                    Database.SaveResult[] srList = Database.insert(listOfShareRecTobeInserted, false);
-                    // Iterate through each returned result
-                    for (Database.SaveResult sr : srList) {
-                        if (sr.isSuccess()) {
-                            // Operation was successful, so get the ID of the record that was processed
-                            System.debug('Successfully inserted share record. share record ID: ' + sr.getId());
+                    if(!listOfShareRecTobeInserted.isEmpty()){
+                        List<List<Sobject>> shareRecTobeInsrtdInChunks=new List<List<Sobject>>();
+                        if(listOfShareRecTobeInserted.size()>chunkSize){
+                            doSubList(listOfShareRecTobeInserted, chunkSize, shareRecTobeInsrtdInChunks);
+                        }else{
+                            shareRecTobeInsrtdInChunks.add(listOfShareRecTobeInserted);
                         }
-                        else {
-                            String message='';
-                            // Operation failed, so get all errors                
-                            for(Database.Error err : sr.getErrors()) {
-                                System.debug('The following error has occurred.');                    
-                                System.debug(err.getStatusCode() + ': ' + err.getMessage());
-                                System.debug('Fields that affected this error: ' + err.getFields());
-                                message+= err.getMessage();
+                        for(List<Sobject> eachChunk:shareRecTobeInsrtdInChunks){
+                            Database.SaveResult[] srList = Database.insert(eachChunk, false);
+                            // Iterate through each returned result
+                            for (Database.SaveResult sr : srList) {
+                                if (!sr.isSuccess()) {
+                                    String message='';
+                                    // Operation failed, so get all errors                
+                                    for(Database.Error err : sr.getErrors()) {
+                                        message+= err.getMessage();
+                                    }
+                                    errorList.add(new CustomError('','','Insert',message));
+                                }
                             }
-                            errorList.add(new CustomError('','','Insert',message));
                         }
                     }
                 }
             }catch(Exception excpn){
-                System.debug('Exception occured==>'+excpn.getMessage());
                 errorList.add(new CustomError('','','','Exception occured==>'+excpn.getMessage()));
             }
         }
         return errorList;
     }
     
+    //This method get all related records to be inserted or deleted
+    public static Map<String,List<SObject>> getRcrdsTobeUpdatedOrInserted(List<Order> orderList,List<Order_Line__c>orderLineList){
+        Map<String,List<SObject>> finalReturnMap=new Map<String,List<SObject>>();
+        if((orderList!=null && !orderList.isEmpty()) || (orderLineList!=null && !orderLineList.isEmpty())){
+            
+            processReturnedMap(getOrderAndShareRecords(orderList),finalReturnMap);
+            processReturnedMap(getOrderLineShareRecords(orderLineList),finalReturnMap);
+            
+        }
+        return finalReturnMap;
+        
+    }
     
+    
+    //This method get all order share records to be inserted
+    public static Map<String,List<Sobject>> getOrderAndShareRecords(List<Order> orderList){
+        Map<String,List<Sobject>> orderAndShareRecordsMap=new Map<String,List<Sobject>>();
+        if(orderList!=null && !orderList.isEmpty()){
+            List<Order> orderListTobeUpdated=new List<Order>();
+            List<Sobject> orderShrListTobeInsrtd=new List<Sobject>();
+            for(Order eachOrder:orderList){
+                if(eachOrder.AccountId!=null && eachOrder.Account.Global_Ultimate_Parent__c!=null){
+                    Order orderRecTobeUpdated=new Order();
+                    orderRecTobeUpdated.Id=eachOrder.Id;
+                    orderRecTobeUpdated.Global_Ultimate_Account__c=eachOrder.Account.Global_Ultimate_Parent__c;
+                    orderListTobeUpdated.add(orderRecTobeUpdated);
+                    if(eachOrder.OwnerId!=eachOrder.Account.Global_Ultimate_Parent__r.OwnerId){
+                        orderShrListTobeInsrtd.add(new OrderShare(OrderId=eachOrder.Id,UserOrGroupId=eachOrder.Account.Global_Ultimate_Parent__r.OwnerId,
+                                                                  RowCause='Manual',OrderAccessLevel='Read'));
+                    }
+                }
+            }
+            orderAndShareRecordsMap.put('updateList',orderListTobeUpdated);
+            orderAndShareRecordsMap.put('insertList',orderShrListTobeInsrtd);
+        }
+        return orderAndShareRecordsMap;
+    }
+    
+    //This method get all order line share records to be inserted or deleted
+    public static Map<String,List<Sobject>> getOrderLineShareRecords(List<Order_Line__c> orderLineList){
+        Map<String,List<Sobject>> orderLineShareRecordsMap=new Map<String,List<Sobject>>();
+        if(orderLineList!=null && !orderLineList.isEmpty()){
+            List<Sobject> orderLineShrListTobeInsrtd=new List<Sobject>();
+            for(Order_Line__c eachOrderLine:orderLineList){
+                if(eachOrderLine.Order__c!=null && 
+                   eachOrderLine.Order__r.AccountId!=null && eachOrderLine.Order__r.Account.Global_Ultimate_Parent__c!=null
+                   && eachOrderLine.OwnerId!=eachOrderLine.Order__r.Account.Global_Ultimate_Parent__r.OwnerId){
+                       orderLineShrListTobeInsrtd.add(new Order_Line__Share(ParentId=eachOrderLine.Id,UserOrGroupId=eachOrderLine.Order__r.Account.Global_Ultimate_Parent__r.OwnerId,
+                                                                            RowCause='Manual',AccessLevel='Read'));
+                   }
+            }
+            orderLineShareRecordsMap.put('insertList',orderLineShrListTobeInsrtd);
+        }
+        return orderLineShareRecordsMap;
+    }
+    
+    //This is util method to process each related object's deleteList and insertList 
+    public static void processReturnedMap(Map<String,List<Sobject>> recMap,Map<String,List<SObject>> finalReturnMap){
+        if(recMap!=null && !recMap.isEmpty()){
+            List<SObject> recordsToBeUpdated=new List<SObject>();
+            List<SObject> shareRecordsToBeInserted=new List<SObject>();
+            if(finalReturnMap!=null && !finalReturnMap.isEmpty()){
+                if(finalReturnMap.containsKey('updateList') && finalReturnMap.get('updateList')!=null && !finalReturnMap.get('updateList').isEmpty()){
+                    recordsToBeUpdated.addAll(finalReturnMap.get('updateList'));
+                }
+                if(finalReturnMap.containsKey('insertList') && finalReturnMap.get('insertList')!=null && !finalReturnMap.get('insertList').isEmpty()){
+                    shareRecordsToBeInserted.addAll(finalReturnMap.get('insertList'));
+                }
+            }
+            if(recMap.containsKey('updateList') && recMap.get('updateList')!=null && !recMap.get('updateList').isEmpty()){
+                recordsToBeUpdated.addAll(recMap.get('updateList'));
+            }
+            if(recMap.containsKey('insertList') && recMap.get('insertList')!=null && !recMap.get('insertList').isEmpty()){
+                shareRecordsToBeInserted.addAll(recMap.get('insertList'));
+            }
+            finalReturnMap.put('updateList',recordsToBeUpdated);
+            finalReturnMap.put('insertList',shareRecordsToBeInserted);
+        }
+    }
+    
+    //This method sends email with attachment if batch fails to process any records 
+    public static void sendEmail(String csvContent){
+        Messaging.EmailFileAttachment csvAttcmnt = new Messaging.EmailFileAttachment ();
+        blob csvBlob = Blob.valueOf (csvContent);
+        string csvname= 'ErrorList.csv';
+        csvAttcmnt.setFileName (csvname);
+        csvAttcmnt.setBody (csvBlob);
+        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+        List<String> toEmailIdList=new List<String>();
+        String toEmailIdStr=System.Label.Global_Parent_Owner_Account_Update_Batch_Notification_EmaildId;
+        if(toEmailIdStr!=null && toEmailIdStr.trim()!=''){
+            if(toEmailIdStr.contains(',')){
+                toEmailIdList=toEmailIdStr.split(',');
+            }else{
+                toEmailIdList.add(toEmailIdStr);
+            }
+        }
+        String[] toAddresses = toEmailIdList; 
+        mail.setToAddresses(toAddresses);
+        mail.setSubject('OrderAndOrderLine_Batch Failed');
+        mail.setPlainTextBody('PFA error file attached.');
+        mail.setFileAttachments (new Messaging.EmailFileAttachment []{csvAttcmnt});
+        Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+    }
+    
+    //This method creates sublist of a list based on chunksize
+    public static void doSubList(List<Sobject> recordList,Integer subListSize,List<List<Sobject>> returnList)
+    {
+        Integer recordListSize=recordList.size();
+        if(recordList!=null && !recordList.isEmpty() && subListSize>0)
+        {
+            Integer noOfSubList = recordListSize / subListSize;
+            
+            if (math.mod(recordListSize,subListSize) > 0) 
+            {
+                noOfSubList++;
+            }
+            for (Integer i = 0; i < noOfSubList; i++) 
+            {
+                List<Sobject> subRecordList = new List<Sobject>();
+                for (Integer j = 0; (j < subListSize) && (subListSize * i + j < recordListSize); j++)
+                {
+                    subRecordList.add(recordList.get((subListSize * i) + j));
+                }
+                returnList.add(subRecordList);		
+                
+            }			
+        }
+    }
     
     public class CustomError
     {

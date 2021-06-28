@@ -87,6 +87,10 @@
                 <behavior>Edit</behavior>
                 <field>Customer_Industry__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Ultimate_Parent_Updated__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

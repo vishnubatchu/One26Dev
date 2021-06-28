@@ -1,7 +1,7 @@
 @isTest
 public class UpdateGlobalParentLookupsBatchTest {
   @testSetup static void setup() {
-        Profile salesUserProfile = [SELECT Id FROM Profile WHERE Name = 'Sales Profile' LIMIT 1];
+        Profile salesUserProfile = [SELECT Id FROM Profile WHERE Name = 'Sales Profile Clone' LIMIT 1];
         List<User>  testUserList=new List<User>();
         for(Integer i=0;i<2;i++){
             String orgId = userInfo.getOrganizationId();
@@ -114,27 +114,28 @@ public class UpdateGlobalParentLookupsBatchTest {
         list<Opportunity> oppList=[Select Id from Opportunity ];
         list<Order> orderList=[Select Id from Order ];
         list<Quote> quoteList=[Select Id from Quote ];
-        list<Opportunity> listOpp = new list<Opportunity>();
-        list<order> listOrd = new list<order>();
-        list<quote> listQt = new list<quote>();
+        list<sobject> finalUpdateList = new list<sobject>();
         for(Opportunity op : oppList){
             op.Global_Ultimate_Account__c = null;
-            listOpp.add(op);
+            finalUpdateList.add(op);
         }
          for(Order ord : orderList){
             ord.Global_Ultimate_Account__c = null;
-            listOrd.add(ord);
+            finalUpdateList.add(ord);
         }
          for(Quote qt : quoteList){
             qt.Global_Ultimate_Account__c = null;
-            listQt.add(qt);
+            finalUpdateList.add(qt);
         }
-        update listOpp;
-        update listOrd;
-        update listQt;
+        update finalUpdateList;
+        List<sObject> scope = new List<sObject>();
+        scope.addAll([select id,Global_Ultimate_Account__c, Account.Global_Ultimate_Parent__c,Account.Global_Ultimate_Parent__r.OwnerId,Account.Changed_Global_Parent_Old_Owner__c,AccountId  from Order where id in : finalUpdateList]);
+        scope.addAll([select id,Global_Ultimate_Account__c,Account.Global_Ultimate_Parent__c,Account.Global_Ultimate_Parent__r.OwnerId,Account.Changed_Global_Parent_Old_Owner__c,AccountId  from Opportunity where id in : finalUpdateList ]);
+        scope.addAll([select id,Global_Ultimate_Account__c,Account.Global_Ultimate_Parent__c,Account.Global_Ultimate_Parent__r.OwnerId,Account.Changed_Global_Parent_Old_Owner__c,AccountId from Quote  where id in : finalUpdateList  ]);
         Test.startTest();
         UpdateGlobalParentLookupsBatch batchObj = new UpdateGlobalParentLookupsBatch();
-        DataBase.executeBatch(batchObj);
+        batchObj.execute(null,scope);
+       DataBase.executeBatch(batchObj);
         Test.stopTest();
        
     }

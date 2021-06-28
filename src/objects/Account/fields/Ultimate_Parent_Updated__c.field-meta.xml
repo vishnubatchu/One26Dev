@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ultimate_Parent_Updated__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( Parent.Global_Parent_Updated__c = True, Global_Parent_Updated__c , IF( Parent.Parent.Global_Parent_Updated__c = True , Parent.Global_Parent_Updated__c  , IF( Parent.Parent.Parent.Global_Parent_Updated__c = True , Parent.Parent.Global_Parent_Updated__c  ,IF( Parent.Parent.Parent.Parent.Global_Parent_Updated__c = True, Parent.Parent.Parent.Global_Parent_Updated__c  ,IF( Parent.Parent.Parent.Parent.Parent.Global_Parent_Updated__c = True, Parent.Parent.Parent.Parent.Global_Parent_Updated__c ,IF( Parent.Parent.Parent.Parent.Parent.Parent.Global_Parent_Updated__c = True, Parent.Parent.Parent.Parent.Parent.Global_Parent_Updated__c ,False))) ) ) )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Ultimate Parent Updated</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

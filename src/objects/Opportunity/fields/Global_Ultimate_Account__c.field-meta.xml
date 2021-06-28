@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <label>Global Ultimate Account</label>
     <lookupFilter>
-        <active>true</active>
+        <active>false</active>
         <errorMessage>Value does not exist or does not match a Global Parent Account</errorMessage>
         <filterItems>
             <field>Account.RecordTypeId</field>

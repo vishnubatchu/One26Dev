@@ -30,6 +30,10 @@
                 <behavior>Edit</behavior>
                 <field>Opportunities_Business_Unit_s__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Ultimate_Parent_Updated__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

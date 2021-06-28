@@ -12,10 +12,10 @@ public class GlobalParentOwnerBatch_Helper {
         if(accountList!=null && !accountList.isEmpty()){
             try{
                 Map<String,List<SObject>> shareRecordsMap=getShareRcrdsTobeDeletedOrInserted(accountList,isOwnerChange);
-                //System.debug('shareRecordsMap==>'+shareRecordsMap);
                 if(shareRecordsMap!=null && !shareRecordsMap.isEmpty()){
                     List<Sobject> listOfShareRecTobeDeleted=new List<Sobject>();
                     List<Sobject> listOfShareRecTobeInserted=new List<Sobject>();
+                    Integer chunkSize=10000;
                     if(shareRecordsMap.containsKey('deleteList') && shareRecordsMap.get('deleteList')!=null
                        && !shareRecordsMap.get('deleteList').isEmpty()){
                            listOfShareRecTobeDeleted.addAll(shareRecordsMap.get('deleteList'));
@@ -24,58 +24,47 @@ public class GlobalParentOwnerBatch_Helper {
                        && !shareRecordsMap.get('insertList').isEmpty()){
                            listOfShareRecTobeInserted.addAll(shareRecordsMap.get('insertList'));
                        }
-                    System.debug('listOfShareRecTobeDeleted==>'+listOfShareRecTobeDeleted);
                     if(!listOfShareRecTobeDeleted.isEmpty()){
-                        // Delete the records
-                        Database.DeleteResult[] drList = Database.delete(listOfShareRecTobeDeleted, false);
-                        
-                        Integer lstIndex=0;
-                        // Iterate through each returned result
-                        for(Database.DeleteResult dr : drList) {
-                            if (dr.isSuccess()) {
-                                // Operation was successful, so get the ID of the record that was processed
-                                System.debug('Successfully deleted record with ID: ' + dr.getId());
-                            }
-                            else {
-                                String message='';
-                                // Operation failed, so get all errors                
-                                for(Database.Error err : dr.getErrors()) {
-                                    System.debug('The following error has occurred.');                    
-                                    System.debug(err.getStatusCode() + ': ' + err.getMessage());
-                                    System.debug('Fields that affected this error: ' + err.getFields());
-                                    message+= err.getMessage();
+                        List<List<Sobject>> shareRecTobeDltdInChunks=new List<List<Sobject>>();
+                        if(listOfShareRecTobeDeleted.size()>chunkSize){
+                            doSubList(listOfShareRecTobeDeleted, chunkSize, shareRecTobeDltdInChunks);
+                        }else{
+                            shareRecTobeDltdInChunks.add(listOfShareRecTobeDeleted);
+                        }
+                        for(List<Sobject> eachChunk:shareRecTobeDltdInChunks){
+                            // Delete the records
+                            Database.DeleteResult[] drList = Database.delete(eachChunk, false);
+                            Integer lstIndex=0;
+                            // Iterate through each returned result
+                            for(Database.DeleteResult dr : drList) {
+                                if (!dr.isSuccess()) {
+                                    String message='';
+                                    // Operation failed, so get all errors                
+                                    for(Database.Error err : dr.getErrors()) {
+                                        message+= err.getMessage();
+                                    }
+                                    Id shareRecordId=eachChunk[lstIndex].Id;
+                                    errorList.add(new CustomError(eachChunk[lstIndex].Id,shareRecordId.getSObjectType().getDescribe().getName(),'Delete',message));
                                 }
-                                Id shareRecordId=listOfShareRecTobeDeleted[lstIndex].Id;
-                                errorList.add(new CustomError(listOfShareRecTobeDeleted[lstIndex].Id,shareRecordId.getSObjectType().getDescribe().getName(),'Delete',message));
+                                lstIndex++;
                             }
-                            lstIndex++;
                         }
                     }
                     if(!listOfShareRecTobeInserted.isEmpty()){
-                        List<List<Sobject>> listOfShareRecInChunks=new  List<List<Sobject>>();
-                        Integer chunkSize=10000;
+                        List<List<Sobject>> shareRecTobeInsrtdInChunks=new List<List<Sobject>>();
                         if(listOfShareRecTobeInserted.size()>chunkSize){
-                            doSubList(listOfShareRecTobeInserted, chunkSize, listOfShareRecInChunks);
+                            doSubList(listOfShareRecTobeInserted, chunkSize, shareRecTobeInsrtdInChunks);
                         }else{
-                            listOfShareRecInChunks.add(listOfShareRecTobeInserted);
+                            shareRecTobeInsrtdInChunks.add(listOfShareRecTobeInserted);
                         }
-                        for(List<Sobject> eachChunks:listOfShareRecInChunks){
-                            
-                            
-                            Database.SaveResult[] srList = Database.insert(eachChunks, false);
+                        for(List<Sobject> eachChunk:shareRecTobeInsrtdInChunks){
+                            Database.SaveResult[] srList = Database.insert(eachChunk, false);
                             // Iterate through each returned result
                             for (Database.SaveResult sr : srList) {
-                                if (sr.isSuccess()) {
-                                    // Operation was successful, so get the ID of the record that was processed
-                                    System.debug('Successfully inserted share record. share record ID: ' + sr.getId());
-                                }
-                                else {
+                                if (!sr.isSuccess()) {
                                     String message='';
                                     // Operation failed, so get all errors                
                                     for(Database.Error err : sr.getErrors()) {
-                                        System.debug('The following error has occurred.');                    
-                                        System.debug(err.getStatusCode() + ': ' + err.getMessage());
-                                        System.debug('Fields that affected this error: ' + err.getFields());
                                         message+= err.getMessage();
                                     }
                                     errorList.add(new CustomError('','','Insert',message));
@@ -85,7 +74,6 @@ public class GlobalParentOwnerBatch_Helper {
                     }
                 }
             }catch(Exception excpn){
-                System.debug('Exception occured==>'+excpn.getMessage());
                 errorList.add(new CustomError('','','','Exception occured==>'+excpn.getMessage()));
             }
         }
@@ -94,7 +82,6 @@ public class GlobalParentOwnerBatch_Helper {
     
     //This method get all related records to be inserted or deleted
     public static Map<String,List<SObject>> getShareRcrdsTobeDeletedOrInserted(List<Account> accountList,boolean isOwnerChange){
-        System.debug('getShareRcrdsTobeDeletedOrInserted(List<Account>,boolean) - start');
         Map<String,List<SObject>> finalReturnMap=new Map<String,List<SObject>>();
         if(accountList!=null && !accountList.isEmpty()){
             
@@ -110,7 +97,6 @@ public class GlobalParentOwnerBatch_Helper {
                 }
                 
             }
-            System.debug('previousOwnerIdSet'+previousOwnerIdSet);
             processReturnedMap(getContactShareRecords(accountList,previousOwnerIdSet,isOwnerChange),finalReturnMap);
             processReturnedMap(getOppShareRecords(accountList,previousOwnerIdSet,isOwnerChange),finalReturnMap);
             processReturnedMap(getQuoteShareRecords(accountList,previousOwnerIdSet,isOwnerChange),finalReturnMap);
@@ -119,13 +105,11 @@ public class GlobalParentOwnerBatch_Helper {
             processReturnedMap(getCaseShareRecords(accountList,previousOwnerIdSet,isOwnerChange),finalReturnMap);
             
         }
-        System.debug('finalReturnMap'+finalReturnMap);
-        System.debug('getShareRcrdsTobeDeletedOrInserted(List<Account>,boolean) - end');
         return finalReturnMap;
         
     }
     
-    //This method get all contact records to be inserted or deleted
+    //This method get all contact share records to be inserted or deleted
     public static Map<String,List<Sobject>> getContactShareRecords(List<Account> accountList,Set<Id> previousOwnerIdSet,boolean isOwnerChange){
         Map<String,List<Sobject>> contactShareRecordsMap=new Map<String,List<Sobject>>();
         if(accountList!=null && !accountList.isEmpty()){
@@ -156,7 +140,7 @@ public class GlobalParentOwnerBatch_Helper {
         return contactShareRecordsMap;
     }
     
-    //This method get all opp records to be inserted or deleted
+    //This method get all opp share records to be inserted or deleted
     public static Map<String,List<Sobject>> getOppShareRecords(List<Account> accountList,Set<Id> previousOwnerIdSet,boolean isOwnerChange){
         Map<String,List<Sobject>> oppShareRecordsMap=new Map<String,List<Sobject>>();
         if(accountList!=null && !accountList.isEmpty()){
@@ -187,7 +171,7 @@ public class GlobalParentOwnerBatch_Helper {
         return oppShareRecordsMap;
     }
     
-    //This method get all quote records to be inserted or deleted
+    //This method get all quote share records to be inserted or deleted
     public static Map<String,List<Sobject>> getQuoteShareRecords(List<Account> accountList,Set<Id> previousOwnerIdSet,boolean isOwnerChange){
         Map<String,List<Sobject>> quoteShareRecordsMap=new Map<String,List<Sobject>>();
         if(accountList!=null && !accountList.isEmpty()){
@@ -218,7 +202,7 @@ public class GlobalParentOwnerBatch_Helper {
         return quoteShareRecordsMap;
     }
     
-    //This method get all order records to be inserted or deleted
+    //This method get all order share records to be inserted or deleted
     public static Map<String,List<Sobject>> getOrderShareRecords(List<Account> accountList,Set<Id> previousOwnerIdSet,boolean isOwnerChange){
         Map<String,List<Sobject>> orderShareRecordsMap=new Map<String,List<Sobject>>();
         if(accountList!=null && !accountList.isEmpty()){
@@ -249,28 +233,33 @@ public class GlobalParentOwnerBatch_Helper {
         return orderShareRecordsMap;
     }
     
-    //This method get all order line records to be inserted or deleted
+    //This method get all order line share records to be inserted or deleted
     public static Map<String,List<Sobject>> getOrderLineShareRecords(List<Account> accountList,Set<Id> previousOwnerIdSet,boolean isOwnerChange){
         Map<String,List<Sobject>> orderLineShareRecordsMap=new Map<String,List<Sobject>>();
         if(accountList!=null && !accountList.isEmpty()){
             List<Sobject> orderLineShrListTobeInsrtd=new List<Order_Line__Share>();
             List<Sobject> orderLineShrListTobeDltd=new List<Order_Line__Share>();
-            List<Order_Line__c> orderLineList=[Select Id,Customer_Name__r.Global_Parent_Previous_Owner__c,Customer_Name__r.Changed_Global_Parent_Old_Owner__c,Customer_Name__r.Global_Ultimate_Parent__r.OwnerId,OwnerId,(Select Id,ParentId,UserOrGroupId from Shares where RowCause='Manual' 
-                                                                                                                                                                                                                          and AccessLevel='Read' and UserOrGroupId IN :previousOwnerIdSet) 
+            List<Order_Line__c> orderLineList=[Select Id,Order__r.Account.Global_Parent_Previous_Owner__c,Order__r.Account.Changed_Global_Parent_Old_Owner__c,Order__r.Account.Global_Ultimate_Parent__r.OwnerId,Customer_Name__r.Global_Parent_Previous_Owner__c,Customer_Name__r.Changed_Global_Parent_Old_Owner__c,Customer_Name__r.Global_Ultimate_Parent__r.OwnerId,OwnerId
+                                               ,(Select Id,ParentId,UserOrGroupId from Shares where RowCause='Manual' and AccessLevel='Read' and UserOrGroupId IN :previousOwnerIdSet) 
                                                from Order_Line__c 
-                                               where Customer_Name__c IN: accountList];
+                                               where Order__r.AccountId IN: accountList];
+                                               //where Customer_Name__c IN: accountList];
             for(Order_Line__c eachOrderLine:orderLineList){
-                Id prevOwnerId=(isOwnerChange==true?eachOrderLine.Customer_Name__r.Global_Parent_Previous_Owner__c:
-                                eachOrderLine.Customer_Name__r.Changed_Global_Parent_Old_Owner__c);
+                /*Id prevOwnerId=(isOwnerChange==true?eachOrderLine.Customer_Name__r.Global_Parent_Previous_Owner__c:
+                                eachOrderLine.Customer_Name__r.Changed_Global_Parent_Old_Owner__c);*/
+                Id prevOwnerId=(isOwnerChange==true?eachOrderLine.Order__r.Account.Global_Parent_Previous_Owner__c:
+                                eachOrderLine.Order__r.Account.Changed_Global_Parent_Old_Owner__c);
                 if(eachOrderLine.Shares!=null){
                     for(Order_Line__Share eachOrderLineShrRec:eachOrderLine.Shares){
-                        if(eachOrderLineShrRec.UserOrGroupId==prevOwnerId){
+                        if(prevOwnerId!=null && eachOrderLineShrRec.UserOrGroupId==prevOwnerId){
                             orderLineShrListTobeDltd.add(eachOrderLineShrRec);
                         }  
                     }
                 }
-                if(eachOrderLine.OwnerId!=eachOrderLine.Customer_Name__r.Global_Ultimate_Parent__r.OwnerId){
-                    orderLineShrListTobeInsrtd.add(new Order_Line__Share(ParentId=eachOrderLine.Id,UserOrGroupId=eachOrderLine.Customer_Name__r.Global_Ultimate_Parent__r.OwnerId,
+                //if(eachOrderLine.OwnerId!=eachOrderLine.Customer_Name__r.Global_Ultimate_Parent__r.OwnerId){
+                if(eachOrderLine.Order__r.Account.Global_Ultimate_Parent__r.OwnerId!=null && 
+                   eachOrderLine.OwnerId!=eachOrderLine.Order__r.Account.Global_Ultimate_Parent__r.OwnerId){
+                    orderLineShrListTobeInsrtd.add(new Order_Line__Share(ParentId=eachOrderLine.Id,UserOrGroupId=eachOrderLine.Order__r.Account.Global_Ultimate_Parent__r.OwnerId,
                                                                          RowCause='Manual',AccessLevel='Read'));
                 }
             }
@@ -280,7 +269,7 @@ public class GlobalParentOwnerBatch_Helper {
         return orderLineShareRecordsMap;
     }
     
-    //This method get all case records to be inserted or deleted
+    //This method get all case share records to be inserted or deleted
     public static Map<String,List<Sobject>> getCaseShareRecords(List<Account> accountList,Set<Id> previousOwnerIdSet,boolean isOwnerChange){
         Map<String,List<Sobject>> caseShareRecordsMap=new Map<String,List<Sobject>>();
         if(accountList!=null && !accountList.isEmpty()){
@@ -313,7 +302,6 @@ public class GlobalParentOwnerBatch_Helper {
     
     //This is util method to process each related object's deleteList and insertList 
     public static void processReturnedMap(Map<String,List<Sobject>> shareRecMap,Map<String,List<SObject>> finalReturnMap){
-        System.debug('processReturnedMap(Map<String,List<Sobject>>,Map<String,List<SObject>>) - start');
         if(shareRecMap!=null && !shareRecMap.isEmpty()){
             List<SObject> shareRecordsToBeDeleted=new List<SObject>();
             List<SObject> shareRecordsToBeInserted=new List<SObject>();
@@ -334,7 +322,6 @@ public class GlobalParentOwnerBatch_Helper {
             finalReturnMap.put('deleteList',shareRecordsToBeDeleted);
             finalReturnMap.put('insertList',shareRecordsToBeInserted);
         }
-        System.debug('processReturnedMap(Map<String,List<Sobject>>,Map<String,List<SObject>>) - end');
     }
     
     //This method sends email with attachment if batch fails to process any records 
@@ -362,7 +349,7 @@ public class GlobalParentOwnerBatch_Helper {
         Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
     }
     
-    
+    //This method creates sublist of a list based on chunksize
     public static void doSubList(List<Sobject> recordList,Integer subListSize,List<List<Sobject>> returnList)
     {
         Integer recordListSize=recordList.size();
@@ -374,16 +361,12 @@ public class GlobalParentOwnerBatch_Helper {
             {
                 noOfSubList++;
             }
-           
-            Integer listIndex=0;
             for (Integer i = 0; i < noOfSubList; i++) 
             {
                 List<Sobject> subRecordList = new List<Sobject>();
                 for (Integer j = 0; (j < subListSize) && (subListSize * i + j < recordListSize); j++)
                 {
-                    listIndex=(subListSize * i) + j;
-                    Sobject record=recordList.get(listIndex);
-                    subRecordList.add(record);
+                    subRecordList.add(recordList.get((subListSize * i) + j));
                 }
                 returnList.add(subRecordList);		
                 

@@ -673,6 +673,11 @@ Manufacture Location (Quotes)</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.Ultimate_Parent_Updated__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.VAT_Number__c</field>
         <readable>false</readable>
     </fieldPermissions>

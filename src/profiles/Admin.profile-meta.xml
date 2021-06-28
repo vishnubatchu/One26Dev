@@ -910,6 +910,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>UpdateGlobalParentLookupsBatchHelper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>UpdateGlobalParentLookupsBatchTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1681,6 +1685,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.UltimateParent__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Ultimate_Parent_Updated__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11013,6 +11022,10 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>false</enabled>
+        <flow>MarlowQuoteCreation</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>false</enabled>
         <flow>One_II_VI_Opportunity_Creation_Flow</flow>
     </flowAccesses>
     <flowAccesses>
@@ -11613,16 +11626,16 @@
         <layout>Order-Order Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-Order Layout</layout>
-        <recordType>Order.Sales_Order</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Order-PoS Layout</layout>
         <recordType>Order.PoS_Order</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-RMA Layout</layout>
+        <layout>Order-PoS Layout</layout>
         <recordType>Order.RMA_Order</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-PoS Layout</layout>
+        <recordType>Order.Sales_Order</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>OrderItem-Order Product Layout</layout>

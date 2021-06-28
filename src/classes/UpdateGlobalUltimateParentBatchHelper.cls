@@ -1,12 +1,18 @@
+/**
+     * Created by : Akhilesh
+     * Date : 31th May 2021
+     * Description: This is a helper class for UpdateGlobalUltimateParentBatch has implemented as per below logic
+     * a) If the Global Ultimate Parent is changed on a Top-Level Account or a Customer that serves as the immediate parent of a child account, then the child’s Global Ultimate Parent should match that of its immediate paren.
+     * b) When the Global_Ultimate_Parent__c is changed on an Account that is populated in Opportunity.AccountId, Quote.AccountId, 
+     * and Order.AccountId, a batch class properly updates Opportunity.Global_Ultimate_Account__c, 
+     * Quote.Global_Ultimate_Account__c, and Order.Global_Ultimate_Account__c to reflect the Account’s Global_Ultimate_Parent__c
+     */
 public class UpdateGlobalUltimateParentBatchHelper {
     
-    public static returnValue UpdateGlobalParent(List<Account> accountList,map<id,Account> globalParentMap ){
+    public static returnValue updateGlobalParent(List<Account> accountList,map<id,Account> globalParentMap ){
         returnValue finalValue = new returnValue();
         List<GlobalParentOwnerBatch_Helper.CustomError> errorList = new List<GlobalParentOwnerBatch_Helper.CustomError>();
-        list<Account> updateAcc = new list<Account>();
-        list<Order> updateOrder = new list<Order>();
-        list<Quote> updateQuote = new list<Quote>();
-        list<opportunity> updateOpp = new list<opportunity>();
+        list<sobject> finalUpdateList = new list<sobject>();
         finalValue.allAccSuccessId  = new set<id>();
         //Account update List Creation 
         for(Account ac : accountList){
@@ -15,101 +21,83 @@ public class UpdateGlobalUltimateParentBatchHelper {
             if(prntId != ''){
                 ac.Global_Ultimate_Parent__c = globalParentMap.get(prntId).Global_Ultimate_Parent__c;
                 ac.Changed_Global_Parent_Old_Owner__c = globalParentMap.get(prntId).Changed_Global_Parent_Old_Owner__c;
-                updateAcc.add(ac);
+                finalUpdateList.add(ac);
             }
         }
         // Order update List Creation 
-        list<opportunity> opList = [select id,AccountId ,Account.Parent.Parent.Parent.Parent.Id,Account.Parent.Parent.Parent.Id,Account.Parent.Parent.Id,Account.Id,Account.Parent.Id,Global_Ultimate_Account__c   from opportunity Where AccountId  In:updateAcc ];
+        list<opportunity> opList = [select id,AccountId ,Account.Parent.Parent.Parent.Parent.Id,Account.Parent.Parent.Parent.Id,Account.Parent.Parent.Id,Account.Id,Account.Parent.Id,Global_Ultimate_Account__c   from opportunity Where AccountId  In:finalUpdateList ];
         if(opList.size() > 0 && opList != null){
             for(opportunity op : opList){
                 string prntId = getParentId(op,globalParentMap);
                 if(prntId != ''){
                     op.Global_Ultimate_Account__c = globalParentMap.get(prntId).Global_Ultimate_Parent__c;
-                    updateOpp.add(op); 
+                    finalUpdateList.add(op); 
                 }
             }
         }
         
         // Order update List Creation 
-        list<Order> ordList = [select id,AccountId ,Account.Parent.Parent.Parent.Parent.Id,Account.Parent.Parent.Parent.Id,Account.Parent.Parent.Id,Account.Id,Account.Parent.Id,Global_Ultimate_Account__c   from Order Where AccountId  In:updateAcc ];
+        list<Order> ordList = [select id,AccountId ,Account.Parent.Parent.Parent.Parent.Id,Account.Parent.Parent.Parent.Id,Account.Parent.Parent.Id,Account.Id,Account.Parent.Id,Global_Ultimate_Account__c   from Order Where AccountId  In:finalUpdateList ];
         if(ordList.size() > 0 && ordList != null){
             for(Order ord : ordList){
                 string prntId = getParentId(ord,globalParentMap);
                 if(prntId != ''){
                     ord.Global_Ultimate_Account__c = globalParentMap.get(prntId).Global_Ultimate_Parent__c;
-                    updateOrder.add(ord); 
+                    finalUpdateList.add(ord); 
                 }
             }
         }
         
         // Quote update List Creation 
-        list<Quote> qtList = [select id,Account__c,Account__r.Parent.Parent.Parent.Parent.Id,Account__r.Parent.Parent.Parent.Id,Account__r.Parent.Parent.Id,Account__r.Id,Account__r.Parent.Id,Global_Ultimate_Account__c  from Quote Where Account__c In:updateAcc ];
+        list<Quote> qtList = [select id,Account__c,Account__r.Parent.Parent.Parent.Parent.Id,Account__r.Parent.Parent.Parent.Id,Account__r.Parent.Parent.Id,Account__r.Id,Account__r.Parent.Id,Global_Ultimate_Account__c  from Quote Where Account__c In:finalUpdateList ];
         if(qtList.size() > 0 && qtList != null){
             for(Quote Qt : qtList){
                 string prntId = getParentId(Qt,globalParentMap);
                 if(prntId != ''){
                     Qt.Global_Ultimate_Account__c = globalParentMap.get(prntId).Global_Ultimate_Parent__c;
-                    updateQuote.add(Qt); 
+                    finalUpdateList.add(Qt); 
                 }
             }
         }
-        //Update Account
+        //Update finalUpdateList
         try{
-            if(updateAcc.size() > 0 && updateAcc != null ){
-                database.SaveResult[] accResult=database.update(updateAcc,false);
-                for(Database.SaveResult acRslt : accResult) {
-                    if (acRslt.isSuccess()) {
-                        finalValue.allAccSuccessId.add(acRslt.getId());
-                    }
-                }
-                if(finalValue.csvBody != ''){
-                    finalValue.csvBody +=  createCSVBody('Account' , accResult);
-                }else{
-                    finalValue.csvBody = createCSVBody('Account' , accResult); 
-                }
+            if(finalUpdateList.size() > 0 && finalUpdateList != null ){
+                 list<list<Sobject>> soblistOfList = new list<list<Sobject>>();
+                        if(finalUpdateList.size()>10000){
+                            soblistOfList.addAll(doSubList(finalUpdateList));
+                        } else{
+                            soblistOfList.add(finalUpdateList);
+                        }
+                        if(!soblistOfList.isEmpty()){
+                            for(list<Sobject> sl : soblistOfList){
+                                continue;
+                                Database.SaveResult[] srList = Database.insert(sl, True); 
+                                continue;
+                                for (Database.SaveResult sr : srList) {
+                                    if (sr.isSuccess()) {
+                                        // Operation was successful, so get the ID of the record that was processed
+                                        System.debug('Successfully inserted share record. share record ID: ' + sr.getId());
+                                    }
+                                    else {
+                                        String message='';
+                                        // Operation failed, so get all errors                
+                                        for(Database.Error err : sr.getErrors()) {
+                                            System.debug('The following error has occurred.');                    
+                                            System.debug(err.getStatusCode() + ': ' + err.getMessage());
+                                            System.debug('Fields that affected this error: ' + err.getFields());
+                                            message+= err.getMessage();
+                                        }
+                                       // errorList.add(new CustomError('','','Insert',message));
+                                    }
+                                }
+                                continue;
+                            } 
+                        }
             }
         }catch(Exception e){
             system.debug('**Error at line number---'+e.getLineNumber() + ' - '+ e.getMessage());
         }
-        //Update Opportunity
-        try{
-            if(updateOpp.size() > 0 && updateOpp != null ){
-                database.SaveResult[] oppResult=database.update(updateOpp,false);
-                if(finalValue.csvBody != ''){
-                    finalValue.csvBody +=  createCSVBody('Opportunity' , oppResult);
-                }else{
-                    finalValue.csvBody = createCSVBody('Opportunity' , oppResult); 
-                }
-            }
-        }catch(Exception e){
-            system.debug('**Error at line number---'+e.getLineNumber() + ' - '+ e.getMessage());
-        }
-        //Update Order
-        try{
-            if(updateOrder.size() > 0 && updateOrder != null ){
-                database.SaveResult[] ordResult=database.update(updateOrder,false);
-                if(finalValue.csvBody != ''){
-                    finalValue.csvBody += createCSVBody('Order' , ordResult);
-                }else{
-                    finalValue.csvBody = createCSVBody('Order' , ordResult); 
-                }
-            }
-        }catch(Exception e){
-            system.debug('**Error at line number---'+e.getLineNumber() + ' - '+ e.getMessage());
-        }
-        //Update Quote
-        try{
-            if(updateQuote.size() > 0 && updateQuote != null ){
-                database.SaveResult[] qtResult=database.update(updateQuote,false);
-                if(finalValue.csvBody != ''){
-                    finalValue.csvBody += createCSVBody('Quote' , qtResult);
-                }else{
-                    finalValue.csvBody = createCSVBody('Quote' , qtResult); 
-                }
-            }
-        }catch(Exception e){
-            system.debug('**Error at line number---'+e.getLineNumber() + ' - '+ e.getMessage());
-        }
+       
         //GlobalParentOwnerBatch_Helper call
         list<Account> acSharing = [select id,Changed_Global_Parent_Old_Owner__c from Account where Id in:finalValue.allAccSuccessId ]; 
         if(acSharing.size() > 0 && acSharing != null){
@@ -203,6 +191,30 @@ public class UpdateGlobalUltimateParentBatchHelper {
         }
         return  parentId;
     } 
+    
+      //create Sub List if list has more then 10000 record 
+    public static list<list<Sobject>> doSubList(List<Sobject> recordList)
+    {
+        list<list<Sobject>> sublistOfList = new list<list<Sobject>>();
+        decimal listsize = recordList.size();
+        decimal recordCount = listsize.divide(10000, 2);
+        long interval = recordCount.round(System.RoundingMode.CEILING);
+        decimal recordCount2 = listsize.divide(interval, 2);
+        long secondInterval = recordCount2.round(System.RoundingMode.CEILING);
+        List<Sobject> shareRecordList = new List<Sobject>();
+        for(Sobject sh : recordList){
+            if(shareRecordList.size() <=  secondInterval){
+                shareRecordList.add(sh);
+            }else{
+                sublistOfList.add(shareRecordList);
+                shareRecordList = new List<Sobject>();
+                shareRecordList.add(sh);
+            }
+        }
+        sublistOfList.add(shareRecordList);
+        
+        return sublistOfList;
+    }
     public class returnValue
     {
         public String csvBody{get;set;}

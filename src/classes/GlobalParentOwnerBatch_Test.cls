@@ -1,7 +1,7 @@
 @isTest
 public class GlobalParentOwnerBatch_Test {
     @testSetup static void setup() {
-        Profile salesUserProfile = [SELECT Id FROM Profile WHERE Name = 'Sales Profile' LIMIT 1];
+        Profile salesUserProfile = [SELECT Id FROM Profile WHERE Name = 'Sales Profile Clone' LIMIT 1];
         //UserRole faeRole = [SELECT Id FROM UserRole WHERE Name LIKE  '%FAE%' LIMIT 1];
         User usr = [Select id from User where Id = :UserInfo.getUserId()];
         List<User>  testUserList=new List<User>();
