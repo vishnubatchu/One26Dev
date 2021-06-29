@@ -1,72 +1,66 @@
 @isTest
 public class UpdateGlobalUltimateParentBatchTest {
-   @testSetup static void setup() {
+    @testSetup static void setup() {
         Profile salesUserProfile = [SELECT Id FROM Profile WHERE Name = 'Sales Profile Clone' LIMIT 1];
-        //UserRole faeRole = [SELECT Id FROM UserRole WHERE Name LIKE  '%FAE%' LIMIT 1];
-        User usr = [Select id from User where Id = :UserInfo.getUserId()];
         List<User>  testUserList=new List<User>();
-        System.RunAs(usr)
-        {
-            UserRole usrRoleRec=new UserRole(Name= 'FAE'); 
-            insert usrRoleRec; 
-
-            for(Integer i=0;i<2;i++){
-                String orgId = userInfo.getOrganizationId();
-                String dateString = String.valueof(Datetime.now()).replace(' ','').replace(':','').replace('-','');
-                Integer randomInt = Integer.valueOf(math.rint(math.random()*1000000));
-                String uniqueName = orgId + dateString + randomInt;
-                testUserList.add(new User(firstname = 'Test',
-                                          lastName = 'User '+(i+1),
-                                          email = uniqueName + '@test' + orgId + '.org',
-                                          Username = uniqueName + '@test' + orgId + '.org',
-                                          EmailEncodingKey = 'ISO-8859-1',
-                                          Alias = uniqueName.substring(18, 23),
-                                          TimeZoneSidKey = 'America/Los_Angeles',
-                                          LocaleSidKey = 'en_US',
-                                          LanguageLocaleKey = 'en_US',
-                                          ProfileId = salesUserProfile.Id,
-                                          isActive = True,
-                                          UserRoleId = usrRoleRec.Id));  
-            }
-            insert testUserList;
+        for(Integer i=0;i<2;i++){
+            String orgId = userInfo.getOrganizationId();
+            String dateString = String.valueof(Datetime.now()).replace(' ','').replace(':','').replace('-','');
+            Integer randomInt = Integer.valueOf(math.rint(math.random()*1000000));
+            String uniqueName = orgId + dateString + randomInt;
+            testUserList.add(new User(firstname = 'Test',
+                                      lastName = 'User '+(i+1),
+                                      email = uniqueName + '@test' + orgId + '.org',
+                                      Username = uniqueName + '@test' + orgId + '.org',
+                                      EmailEncodingKey = 'ISO-8859-1',
+                                      Alias = uniqueName.substring(18, 23),
+                                      TimeZoneSidKey = 'America/Los_Angeles',
+                                      LocaleSidKey = 'en_US',
+                                      LanguageLocaleKey = 'en_US',
+                                      ProfileId = salesUserProfile.Id,
+                                      isActive = True,
+                                      UserRoleId = null));  
         }
-        List<Account> globalParentAccList=new List<Account>();  
-        globalParentAccList.add(new Account(Name='Global Parent Test Acc',Display_Shipping_Country__c ='United States',   Display_Billing_Country__c = 'United States',ShippingCity = 'New York', ShippingCountry ='US',RecordTypeId=Schema.SObjectType.Account.getRecordTypeInfosByName().get('Global Parent').getRecordTypeId(),OwnerId=testUserList[0].Id));
-        globalParentAccList.add(new Account(Name='Global Parent Test Acc1',Display_Shipping_Country__c ='United States',   Display_Billing_Country__c = 'United States',ShippingCity = 'New York', ShippingCountry ='US',RecordTypeId=Schema.SObjectType.Account.getRecordTypeInfosByName().get('Global Parent').getRecordTypeId()));
-        insert globalParentAccList;  
-        List<Account> accList=new List<Account>(); 
-        for(Integer i=1;i<=6;i++){
-            accList.add(new Account(Name='Test Acc '+i,Display_Shipping_Country__c ='United States',   Display_Billing_Country__c = 'United States',RecordTypeId=Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer Account').getRecordTypeId(),ShippingCity = 'New York', ShippingCountry ='US',
-                                    Global_Ultimate_Parent__c=globalParentAccList[0].Id,Status__c='Active'));
-        }  
-        accList.add(new Account(Name='Site Test Acc',RecordTypeId=Schema.SObjectType.Account.getRecordTypeInfosByName().get('Site').getRecordTypeId(),Display_Shipping_Country__c ='United States',   Display_Billing_Country__c = 'United States',
-                                Global_Ultimate_Parent__c=globalParentAccList[0].Id,Site_Use_Code__c='SHIP_TO',Status__c='Active',
-                                Site_Use_Status__c='Active',shippingcity='New York',shippingcountry='US',Type='Site ',
-                                Org_ID__c= '2'));
-        insert accList;
+        insert testUserList;
+        list<Account> globalParentList = new list<Account>();
+        Account globalParentAcc=new Account(Name='Global Parent Test Acc',shippingcountry = 'USA',Display_Shipping_Country__c ='United States', Display_Billing_Country__c = 'United States',RecordTypeId=Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Global_Parent').getRecordTypeId(),OwnerId=testUserList[0].Id	);
+         globalParentList.add(globalParentAcc);
+        Account globalParentAcc2=new Account(Name='Global Parent Test Acc2',shippingcountry = 'USA',Display_Shipping_Country__c ='United States', Display_Billing_Country__c = 'United States',RecordTypeId=Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Global_Parent').getRecordTypeId()	);
+         globalParentList.add(globalParentAcc2);
+        insert globalParentList;
+       
+        Account topLevelAccount = new Account(Name='child1 ',ParentId = globalParentList[1].Id,Global_Ultimate_Parent__c=globalParentList[0].Id,shippingcountry = 'USA',Display_Shipping_Country__c ='United States', Display_Billing_Country__c = 'United States',RecordTypeId= Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Party_Account').getRecordTypeId(),
+                                     Status__c='Active'); 
+        insert topLevelAccount;
+         Account customerAccount=new Account(Name='customerAcc',Display_Shipping_Country__c ='United States', Display_Billing_Country__c = 'United States',RecordTypeId= Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Account').getRecordTypeId(),
+                                     Site_Use_Code__c='SHIP_TO',Status__c='Active',ParentId = topLevelAccount.Id,
+                                     Site_Use_Status__c='Active',shippingcity='New York',shippingcountry='USA',Type='Customer',
+                                     Org_ID__c= '2');
+        insert customerAccount;
+    
+  
+        
         List<Contact> contactList=new List<Contact>();
-        Integer index=1;
-        for(Integer i=0;i<accList.size()-1;i++){
-            contactList.add(new Contact(LastName='Test Contact '+index,AccountId=accList[i].Id));
-            index++;
+        for(integer i = 0 ; i < 5 ; i++){
+            contactList.add(new Contact(LastName='Test Contact '+i,FirstName = 'test',AccountId=customerAccount.Id));
         }  
         insert contactList;
+        
         List<Opportunity> oppList=new List<Opportunity>();
-        index=1;
-        for(Integer i=0;i<accList.size()-1;i++){
-            oppList.add(new Opportunity(CloseDate=System.today(),AccountId=accList[i].Id,ForecastCategoryName='Pipeline',
-                                        Name='Test Opp '+index,StageName='Qualifying',Project_Name__c='Test',RecordTypeId=Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Aftermarket').getRecordTypeId()));
-            index++;
+        for(integer i = 0 ; i < 5 ; i++){
+            oppList.add(new Opportunity(CloseDate=System.today(),AccountId=customerAccount.Id,ForecastCategoryName='Pipeline',
+                                        Name='Test Opp '+i,StageName='Qualifying',Project_Name__c='Test',RecordTypeId= Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Aftermarket').getRecordTypeId()));
         } 
         insert oppList;
+        
         List<Quote> quoteList=new List<Quote>();
-        index=1;
+       integer index=1;
         for(Opportunity eachOpp:oppList){
             quoteList.add(new Quote(OpportunityId=eachOpp.Id,Account__c=eachOpp.AccountId,Name='Test Quote '+index));
             index++;
         }
         insert quoteList;
-        System.debug('After quoteList insert-->'+Limits.getQueries());
+        
         List<Order> orderList=new List<Order>();
         index=1;
         for(Opportunity eachOpp:oppList){
@@ -75,6 +69,7 @@ public class UpdateGlobalUltimateParentBatchTest {
             index++;
         }
         insert orderList;
+        
         List<Order_Line__c> orderLineList=new List<Order_Line__c>();
         //index=1;
         for(Order eachOrder:orderList){
@@ -82,33 +77,40 @@ public class UpdateGlobalUltimateParentBatchTest {
             //index++;
         }
         insert orderLineList;
-        List<Case> caseList=new List<Case>();
         
-        for(Integer i=0;i<accList.size()-1;i++){
-            /*caseList.add(new Case(RecordTypeId=Schema.SObjectType.Case.getRecordTypeInfosByName().get('RMA Request').getRecordTypeId(),Failure_Location__c='Dead on Arrival',AccountId=accList[i].Id,
-Finisar_Sales_Manager__c=UserInfo.getUserId(),Requested_Service__c='Loaner Return',Billing_Type__c='Others',
-Ship_To_Address__c=accList[6].Id,Ship_To_Customer__c=accList[i].Id));*/
-            caseList.add(new Case(RecordTypeId=Schema.SObjectType.Case.getRecordTypeInfosByName().get('HY').getRecordTypeId(),Found_By__c='Customer',Part_Numbers_s__c='12345',AccountId=accList[i].Id,
-                                  FAE__c=testUserList[0].Id,Subject='Test Case '+i));
-        }  
-        insert caseList;
     }
     
-    @isTest static void testGlobalParentOwnerBatch() {
+    @isTest static void testGlobalParentChange() {
         User testUser=[Select Id from User where lastName='User 2'];
-        Account globalParentAcc=[Select Id from Account where Name='Global Parent Test Acc'];
-        globalParentAcc.OwnerId=testUser.Id;
-        update globalParentAcc;
+        Account childAcc=[Select Id from Account where Name='customerAcc'];
+        Account globalParent=[Select Id from Account where Name='Global Parent Test Acc2'];
+        childAcc.Global_Ultimate_Parent__c=globalParent.Id;
+        update childAcc;
         Test.startTest();
         UpdateGlobalUltimateParentBatch batchObj = new UpdateGlobalUltimateParentBatch();
         DataBase.executeBatch(batchObj);
         Test.stopTest();
-        List<Contact> cntctList=[Select Id from Contact];
-        List<ContactShare> cntctShrList=[Select Id from ContactShare where UserOrGroupId=:testUser.Id and ContactAccessLevel='Read'
-                                         and RowCause='Manual' and ContactId in: cntctList];
-        
-        System.assertEquals(cntctList.size(),cntctShrList.size());
+          list<Account> finalList = [select id,Global_Parent_Updated__c from Account where Global_Parent_Updated__c = True]; 
+     
     }
-    
- 
+       @isTest static void testDoSubListHelperMethod() {
+        Test.startTest();
+        List<Account> orderList=[Select Id from Account];
+        List<List<Sobject>> sObjectList=new List<List<Sobject>>();
+        sObjectList = UpdateGlobalUltimateParentBatchHelper.doSubList(orderList);
+        System.assertEquals(1,sObjectList.size());
+        Test.stopTest();
+    }
+     @isTest static void testCreateCSVHelperMethod() {
+        Test.startTest();
+         list<Account> globalParentList = new list<Account>();
+         for(integer i= 0; i<3 ; i++){
+            Account globalParentAcc2=new Account(Name='Global Parent Test Acc2'+ i,shippingcountry = 'USA',Display_Shipping_Country__c ='United States', Display_Billing_Country__c = 'United States',RecordTypeId=Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Global_Parent').getRecordTypeId()	);
+         globalParentList.add(globalParentAcc2);  
+         }
+          Database.SaveResult[] srList = Database.insert(globalParentList, True); 
+      string  sObjectList = UpdateGlobalUltimateParentBatchHelper.createCSVBody('Account',srList);
+      //  System.assertEquals(1,sObjectList.size());
+        Test.stopTest();
+    }
 }

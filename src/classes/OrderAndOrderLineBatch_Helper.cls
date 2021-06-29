@@ -1,6 +1,12 @@
+/*
+* Created by : Pooja U
+* Date : 23rd June 2021
+* Description: This helper class populates 'Global_Ultimate_Account__c' on order with the same value in Order.AccountId.Global_Ultimate_Parent__c 
+* and also inserts share records for the Order & OrderLine linked/associated Account's Global Parent Account owner
+*/
 public class OrderAndOrderLineBatch_Helper {
     
-    //This method inserts share records
+    //This method updates order and insert order and orderline share records
     public static List<CustomError> updateOrderAndInsertShareRecords(List<Order> orderList,List<Order_Line__c>orderLineList){
         List<CustomError> errorList=new List<CustomError>();
         if((orderList!=null && !orderList.isEmpty()) || (orderLineList!=null && !orderLineList.isEmpty())){
@@ -73,7 +79,7 @@ public class OrderAndOrderLineBatch_Helper {
         return errorList;
     }
     
-    //This method get all related records to be inserted or deleted
+    //This method get order records to be updated and order/orderline share records to be inserted
     public static Map<String,List<SObject>> getRcrdsTobeUpdatedOrInserted(List<Order> orderList,List<Order_Line__c>orderLineList){
         Map<String,List<SObject>> finalReturnMap=new Map<String,List<SObject>>();
         if((orderList!=null && !orderList.isEmpty()) || (orderLineList!=null && !orderLineList.isEmpty())){
@@ -87,7 +93,7 @@ public class OrderAndOrderLineBatch_Helper {
     }
     
     
-    //This method get all order share records to be inserted
+    //This method get order share records to be inserted and order records to be updated
     public static Map<String,List<Sobject>> getOrderAndShareRecords(List<Order> orderList){
         Map<String,List<Sobject>> orderAndShareRecordsMap=new Map<String,List<Sobject>>();
         if(orderList!=null && !orderList.isEmpty()){
@@ -111,7 +117,7 @@ public class OrderAndOrderLineBatch_Helper {
         return orderAndShareRecordsMap;
     }
     
-    //This method get all order line share records to be inserted or deleted
+    //This method get order line share records to be inserted
     public static Map<String,List<Sobject>> getOrderLineShareRecords(List<Order_Line__c> orderLineList){
         Map<String,List<Sobject>> orderLineShareRecordsMap=new Map<String,List<Sobject>>();
         if(orderLineList!=null && !orderLineList.isEmpty()){
@@ -129,7 +135,7 @@ public class OrderAndOrderLineBatch_Helper {
         return orderLineShareRecordsMap;
     }
     
-    //This is util method to process each related object's deleteList and insertList 
+    //This is util method to process each related object's updateList and insertList 
     public static void processReturnedMap(Map<String,List<Sobject>> recMap,Map<String,List<SObject>> finalReturnMap){
         if(recMap!=null && !recMap.isEmpty()){
             List<SObject> recordsToBeUpdated=new List<SObject>();

@@ -1824,6 +1824,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.Region_Country__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Region_State__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Region__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.SAP_Customer_ID__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -3654,6 +3669,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Costing__c.Cost_Completion_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Costing__c.Costing_Number__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -3745,6 +3765,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Costing__c.Salesforce_Legacy_Id__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Costing__c.Special_Requirements__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

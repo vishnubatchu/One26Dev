@@ -120,12 +120,26 @@
         </rules>
         <rules>
             <name>Customer</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>getAccount.RecordType.DeveloperName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Account</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getAccount.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Party_Account</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getAccount.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>External_Account</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -549,6 +563,12 @@ TEXT({!$User.Legacy_Company__c})=&quot;Marlow&quot;, &quot;Custom Part&quot;,
             <field>Display_Shipping_Country__c</field>
             <value>
                 <elementReference>Display_Shipping_Country</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Global_Ultimate_Parent__c</field>
+            <value>
+                <elementReference>varGlobalAccountId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

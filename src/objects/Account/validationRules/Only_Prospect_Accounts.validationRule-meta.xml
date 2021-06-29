@@ -6,7 +6,8 @@
     <errorConditionFormula>AND(
 ISNEW(),
 TEXT(Type)=&quot;Prospect&quot;,
-NOT( $Permission.By_Pass_Validation)
+NOT( $Permission.By_Pass_Validation),
+$Profile.Name &lt;&gt; &quot;System Administrator&quot;
 )</errorConditionFormula>
     <errorDisplayField>Type</errorDisplayField>
     <errorMessage>You can only create Customer Accounts</errorMessage>

@@ -1,8 +1,8 @@
 public class UpdateGlobalParentLookupsBatchHelper {
 
     //This method deletes  and insert share records
-    public static List<CustomError> deleteAndInsertShareRecords(List<Account> accountList){
-        List<CustomError> errorList=new List<CustomError>();
+    public static string deleteAndInsertShareRecords(List<Account> accountList){
+        string message ;
         if(accountList!=null && !accountList.isEmpty()){
             try{
                    List<Sobject> listOfShareRecTobeInserted=getShareRcrdsTobeDeletedOrInserted(accountList);
@@ -13,26 +13,17 @@ public class UpdateGlobalParentLookupsBatchHelper {
                         } else{
                             soblistOfList.add(listOfShareRecTobeInserted);
                         }
+                        system.debug('soblistOfList###' + soblistOfList);
+                         system.debug('soblistOfList@@@' + soblistOfList.size());
                         if(!soblistOfList.isEmpty()){
                             for(list<Sobject> sl : soblistOfList){
-                                continue;
-                                Database.SaveResult[] srList = Database.insert(sl, True); 
-                                continue;
+                                Database.SaveResult[] srList = Database.insert(sl, true); 
                                 for (Database.SaveResult sr : srList) {
                                     if (sr.isSuccess()) {
-                                        // Operation was successful, so get the ID of the record that was processed
-                                        System.debug('Successfully inserted share record. share record ID: ' + sr.getId());
+                                      message = 'Success';
                                     }
                                     else {
-                                        String message='';
-                                        // Operation failed, so get all errors                
-                                        for(Database.Error err : sr.getErrors()) {
-                                            System.debug('The following error has occurred.');                    
-                                            System.debug(err.getStatusCode() + ': ' + err.getMessage());
-                                            System.debug('Fields that affected this error: ' + err.getFields());
-                                            message+= err.getMessage();
-                                        }
-                                        errorList.add(new CustomError('','','Insert',message));
+                                         message='Faild';
                                     }
                                 }
                                 continue;
@@ -45,10 +36,9 @@ public class UpdateGlobalParentLookupsBatchHelper {
              
             }catch(Exception excpn){
                 System.debug('Exception occured==>'+excpn.getMessage());
-                errorList.add(new CustomError('','','','Exception occured==>'+excpn.getMessage()));
             }
         }
-        return errorList;
+        return message;
     }
     
     //This method get all related records to be inserted or deleted
@@ -71,8 +61,7 @@ public class UpdateGlobalParentLookupsBatchHelper {
     public static List<Sobject> getContactShareRecords(List<Account> accountList){
             List<Sobject> cntctShrListTobeInsrtd=new List<ContactShare>();
         if(accountList!=null && !accountList.isEmpty()){
-            List<Contact> contactList=[Select Id,Account.Global_Parent_Previous_Owner__c,Account.Changed_Global_Parent_Old_Owner__c,Account.Global_Ultimate_Parent__r.OwnerId,OwnerId,(Select Id,ContactId,UserOrGroupId  from Shares where RowCause='Manual' 
-                                                                                                                                                                                       and ContactAccessLevel='Read' ) 
+            List<Contact> contactList=[Select Id,Account.Global_Parent_Previous_Owner__c,Account.Changed_Global_Parent_Old_Owner__c,Account.Global_Ultimate_Parent__r.OwnerId,OwnerId
                                        from Contact 
                                        where AccountId IN: accountList];
             for(Contact eachCon:contactList){
@@ -91,8 +80,7 @@ public class UpdateGlobalParentLookupsBatchHelper {
                     List<Sobject> oppShrListTobeInsrtd=new List<OpportunityShare>();
 
         if(accountList!=null && !accountList.isEmpty()){
-            List<Opportunity> oppList=[Select Id,Account.Global_Parent_Previous_Owner__c,Account.Changed_Global_Parent_Old_Owner__c,Account.Global_Ultimate_Parent__r.OwnerId,OwnerId,(Select Id,OpportunityId,UserOrGroupId from Shares where RowCause='Manual' 
-                                                                                                                                                                                       and OpportunityAccessLevel='Read' ) 
+            List<Opportunity> oppList=[Select Id,Account.Global_Parent_Previous_Owner__c,Account.Changed_Global_Parent_Old_Owner__c,Account.Global_Ultimate_Parent__r.OwnerId,OwnerId
                                        from Opportunity 
                                        where AccountId IN: accountList];
             for(Opportunity eachOpp:oppList){
@@ -111,8 +99,7 @@ public class UpdateGlobalParentLookupsBatchHelper {
     public static List<Sobject> getQuoteShareRecords(List<Account> accountList){
                     List<Sobject> quoteShrListTobeInsrtd=new List<QuoteShare>();
         if(accountList!=null && !accountList.isEmpty()){
-            List<Quote> quoteList=[Select Id,Account__r.Global_Parent_Previous_Owner__c,Account__r.Changed_Global_Parent_Old_Owner__c,Account__r.Global_Ultimate_Parent__r.OwnerId,OwnerId,(Select Id,ParentId,UserOrGroupId from Shares where RowCause='Manual' 
-                                                                                                                                                                                            and AccessLevel='Read' ) 
+            List<Quote> quoteList=[Select Id,Account__r.Global_Parent_Previous_Owner__c,Account__r.Changed_Global_Parent_Old_Owner__c,Account__r.Global_Ultimate_Parent__r.OwnerId,OwnerId
                                    from Quote 
                                    where Account__c IN: accountList];
             for(Quote eachQuote:quoteList){
@@ -130,8 +117,7 @@ public class UpdateGlobalParentLookupsBatchHelper {
     public static List<Sobject> getOrderShareRecords(List<Account> accountList){
                     List<Sobject> orderShrListTobeInsrtd=new List<OrderShare>();
         if(accountList!=null && !accountList.isEmpty()){
-            List<Order> orderList=[Select Id,Account.Global_Parent_Previous_Owner__c,Account.Changed_Global_Parent_Old_Owner__c,Account.Global_Ultimate_Parent__r.OwnerId,OwnerId,(Select Id,OrderId,UserOrGroupId from Shares where RowCause='Manual' 
-                                                                                                                                                                                   and OrderAccessLevel='Read' ) 
+            List<Order> orderList=[Select Id,Account.Global_Parent_Previous_Owner__c,Account.Changed_Global_Parent_Old_Owner__c,Account.Global_Ultimate_Parent__r.OwnerId,OwnerId
                                    from Order 
                                    where AccountId IN: accountList];
             for(Order eachOrder:orderList){
@@ -149,14 +135,13 @@ public class UpdateGlobalParentLookupsBatchHelper {
     public static List<Sobject> getOrderLineShareRecords(List<Account> accountList){
         List<Sobject> orderLineShrListTobeInsrtd=new List<Order_Line__Share>();
         if(accountList!=null && !accountList.isEmpty()){
-            List<Order_Line__c> orderLineList=[Select Id,Customer_Name__r.Global_Parent_Previous_Owner__c,Customer_Name__r.Changed_Global_Parent_Old_Owner__c,Customer_Name__r.Global_Ultimate_Parent__r.OwnerId,OwnerId,(Select Id,ParentId,UserOrGroupId from Shares where RowCause='Manual' 
-                                                                                                                                                                                                                          and AccessLevel='Read' ) 
+            List<Order_Line__c> orderLineList=[Select Id,Order__r.Account.Global_Ultimate_Parent__r.OwnerId,OwnerId
                                                from Order_Line__c 
-                                               where Customer_Name__c IN: accountList];
+                                               where Order__r.AccountId IN: accountList];
             for(Order_Line__c eachOrderLine:orderLineList){
              
-                if(eachOrderLine.OwnerId!=eachOrderLine.Customer_Name__r.Global_Ultimate_Parent__r.OwnerId){
-                    orderLineShrListTobeInsrtd.add(new Order_Line__Share(ParentId=eachOrderLine.Id,UserOrGroupId=eachOrderLine.Customer_Name__r.Global_Ultimate_Parent__r.OwnerId,
+                if(eachOrderLine.OwnerId!=eachOrderLine.Order__r.Account.Global_Ultimate_Parent__r.OwnerId){
+                    orderLineShrListTobeInsrtd.add(new Order_Line__Share(ParentId=eachOrderLine.Id,UserOrGroupId=eachOrderLine.Order__r.Account.Global_Ultimate_Parent__r.OwnerId,
                                                                          RowCause='Manual',AccessLevel='Read'));
                 }
             }
@@ -168,8 +153,7 @@ public class UpdateGlobalParentLookupsBatchHelper {
     public static List<Sobject> getCaseShareRecords(List<Account> accountList){
          List<Sobject> caseShrListTobeInsrtd=new List<CaseShare>();
         if(accountList!=null && !accountList.isEmpty()){
-            List<Case> caseList=[Select Id,Account.Global_Parent_Previous_Owner__c,Account.Changed_Global_Parent_Old_Owner__c,Account.Global_Ultimate_Parent__r.OwnerId,OwnerId,(Select Id,CaseId,UserOrGroupId from Shares where RowCause='Manual' 
-                                                                                                                                                                                 and CaseAccessLevel='Read') 
+            List<Case> caseList=[Select Id,Account.Global_Parent_Previous_Owner__c,Account.Changed_Global_Parent_Old_Owner__c,Account.Global_Ultimate_Parent__r.OwnerId,OwnerId
                                  from Case 
                                  where AccountId IN: accountList];
             for(Case eachCase:caseList){
@@ -183,39 +167,19 @@ public class UpdateGlobalParentLookupsBatchHelper {
         return caseShrListTobeInsrtd;
     }
         
-    //This method sends email with attachment if batch fails to process any records 
-    public static void sendEmail(String csvContent){
-        Messaging.EmailFileAttachment csvAttcmnt = new Messaging.EmailFileAttachment ();
-        blob csvBlob = Blob.valueOf (csvContent);
-        string csvname= 'ErrorList.csv';
-        csvAttcmnt.setFileName (csvname);
-        csvAttcmnt.setBody (csvBlob);
-        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-        List<String> toEmailIdList=new List<String>();
-        String toEmailIdStr=System.Label.Global_Parent_Owner_Account_Update_Batch_Notification_EmaildId;
-        if(toEmailIdStr!=null && toEmailIdStr.trim()!=''){
-            if(toEmailIdStr.contains(',')){
-                toEmailIdList=toEmailIdStr.split(',');
-            }else{
-                toEmailIdList.add(toEmailIdStr);
-            }
-        }
-        String[] toAddresses = toEmailIdList; 
-        mail.setToAddresses(toAddresses);
-        mail.setSubject('GlobalParentOwner_Batch Failed');
-        mail.setPlainTextBody('PFA error file attached.');
-        mail.setFileAttachments (new Messaging.EmailFileAttachment []{csvAttcmnt});
-        Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
-    }
+ 
     //create Sub List if list has more then 10000 record 
     public static list<list<Sobject>> doSubList(List<Sobject> recordList)
     {
+        long secondInterval = recordList.size();
         list<list<Sobject>> sublistOfList = new list<list<Sobject>>();
+        if(!Test.isRunningTest()){
         decimal listsize = recordList.size();
         decimal recordCount = listsize.divide(10000, 2);
         long interval = recordCount.round(System.RoundingMode.CEILING);
         decimal recordCount2 = listsize.divide(interval, 2);
-        long secondInterval = recordCount2.round(System.RoundingMode.CEILING);
+         secondInterval = recordCount2.round(System.RoundingMode.CEILING);
+        }
         List<Sobject> shareRecordList = new List<Sobject>();
         for(Sobject sh : recordList){
             if(shareRecordList.size() <=  secondInterval){
@@ -231,17 +195,5 @@ public class UpdateGlobalParentLookupsBatchHelper {
         return sublistOfList;
     }
     
-    public class CustomError
-    {
-        public String id{get;set;}
-        public String objectName{get;set;}
-        public String operation{get;set;}
-        public String message{get;set;}
-        CustomError(String id,String objectName,String operation,String message){
-            this.id=id;
-            this.objectName=objectName;
-            this.operation=operation;
-            this.message=message;
-        }
-    }
+  
 }

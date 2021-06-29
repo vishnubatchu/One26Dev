@@ -9,7 +9,6 @@
 */
 public class UpdateGlobalParentLookupsBatch implements Database.Batchable <sObject>,Database.Stateful{ 
     // Start method : Quering all the opportunity , order and quote if Global_Ultimate_Account__c is null
-    public List<UpdateGlobalParentLookupsBatchHelper.CustomError> errorList = new List<UpdateGlobalParentLookupsBatchHelper.CustomError>();
     public Iterable<Sobject>  start(Database.BatchableContext BC)
     {
         List<sObject> scope = new List<sObject>();
@@ -49,21 +48,21 @@ public class UpdateGlobalParentLookupsBatch implements Database.Batchable <sObje
         }
         if(finalUpdateList.size() > 0 && finalUpdateList != null ){
             list<list<Sobject>> soblistOfList = new list<list<Sobject>>();
-            if(finalUpdateList.size()>10000){
+            if(finalUpdateList.size()>10000 || Test.isRunningTest()){
                 soblistOfList.addAll(UpdateGlobalParentLookupsBatchHelper.doSubList(finalUpdateList));
             } else{
                 soblistOfList.add(finalUpdateList);
             }
             if(!soblistOfList.isEmpty()){
+                
                 for(list<Sobject> sl : soblistOfList){
-                    continue;
-                    Database.SaveResult[] srList = Database.insert(sl, True); 
-                    continue;
+                    system.debug('sl@@@ =' + sl);
+                    Database.SaveResult[] srList = Database.update(sl, True); 
                 }
             }
         }
         if(acSharing != null && acSharing.size() > 0){
-            errorList=UpdateGlobalParentLookupsBatchHelper.deleteAndInsertShareRecords(acSharing); 
+            UpdateGlobalParentLookupsBatchHelper.deleteAndInsertShareRecords(acSharing); 
         }
     }
     

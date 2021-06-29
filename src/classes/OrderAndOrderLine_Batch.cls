@@ -2,7 +2,8 @@
 * Created by : Pooja U
 * Date : 23rd June 2021
 * Description: When Order and OrderLine records are inserted from Integration, batch class pick those records based on Integration flag,
-* populates 'Global_Ultimate_Account__c' on order and also inserts share records for Order & OrderLine 
+* populates 'Global_Ultimate_Account__c' on order with the same value in Order.AccountId.Global_Ultimate_Parent__c 
+* and also inserts share records for the Order & OrderLine linked/associated Account's Global Parent Account owner   
 */
 public class OrderAndOrderLine_Batch implements Database.Batchable<sObject>,Database.Stateful{
     List<OrderAndOrderLineBatch_Helper.CustomError> finalErrorList=new List<OrderAndOrderLineBatch_Helper.CustomError>();
@@ -10,6 +11,7 @@ public class OrderAndOrderLine_Batch implements Database.Batchable<sObject>,Data
     string csvHeader = 'Record Id,Object Name,Operation, Error \n';
     string mainContent = csvHeader;
     
+    //This method queries all Order and OrderLine records that are coming from Integration and not picked up by batch yet i.e.,Integration_Flag__c=true and Batch_Flag__c=false
     public List<Sobject> start(Database.BatchableContext bc) {
         // collect the batches of records or objects to be passed to execute
         List<Sobject> orderAndOrderLineList=new List<Sobject>();
@@ -23,6 +25,10 @@ public class OrderAndOrderLine_Batch implements Database.Batchable<sObject>,Data
         orderAndOrderLineList.addAll(orderLineList);
         return orderAndOrderLineList;
     }
+    
+    /*This method populates 'Global_Ultimate_Account__c' on order  with the same value in Order.AccountId.Global_Ultimate_Parent__c.
+     * Also inserts share records for the Order & OrderLine linked/associated Account's Global Parent Account owner
+     */
     public void execute(Database.BatchableContext bc, List<Sobject> orderAndOrderLineList){
         // process each batch of records
         if(orderAndOrderLineList!=null && !orderAndOrderLineList.isEmpty()){

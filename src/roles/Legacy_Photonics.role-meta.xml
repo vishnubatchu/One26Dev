@@ -5,4 +5,5 @@
     <mayForecastManagerShare>false</mayForecastManagerShare>
     <name>Legacy Photonics</name>
     <opportunityAccessLevel>Edit</opportunityAccessLevel>
+    <parentRole>Executive</parentRole>
 </Role>

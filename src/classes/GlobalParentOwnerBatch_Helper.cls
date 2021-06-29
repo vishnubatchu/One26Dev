@@ -43,8 +43,7 @@ public class GlobalParentOwnerBatch_Helper {
                                     for(Database.Error err : dr.getErrors()) {
                                         message+= err.getMessage();
                                     }
-                                    Id shareRecordId=eachChunk[lstIndex].Id;
-                                    errorList.add(new CustomError(eachChunk[lstIndex].Id,shareRecordId.getSObjectType().getDescribe().getName(),'Delete',message));
+                                    errorList.add(new CustomError(eachChunk[lstIndex].Id,eachChunk[lstIndex].Id.getSObjectType().getDescribe().getName(),'Delete',message));
                                 }
                                 lstIndex++;
                             }
@@ -80,7 +79,7 @@ public class GlobalParentOwnerBatch_Helper {
         return errorList;
     }
     
-    //This method get all related records to be inserted or deleted
+    //This method get all related share records to be inserted or deleted
     public static Map<String,List<SObject>> getShareRcrdsTobeDeletedOrInserted(List<Account> accountList,boolean isOwnerChange){
         Map<String,List<SObject>> finalReturnMap=new Map<String,List<SObject>>();
         if(accountList!=null && !accountList.isEmpty()){
