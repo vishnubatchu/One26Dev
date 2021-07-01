@@ -2293,6 +2293,11 @@ Manufacture Location (Quotes)</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Costing_Quote__c.Quantity__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Costing_Quote__c.Request_Type__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -4989,6 +4994,11 @@ Manufacture Location (Quotes)</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Opportunity_Number__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Order_Created__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

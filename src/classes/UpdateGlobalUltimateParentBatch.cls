@@ -9,9 +9,6 @@
      */
 public class UpdateGlobalUltimateParentBatch implements Database.Batchable <sObject>,Database.Stateful{ 
     public String query;
-    public map<id,Account> accountMap = new map<id,Account>();
-    public List<Id> accountlist = new list<Id>();
-    public set<id> allAccSuccessId=new set<id>();
     public string csvBody;
     public string headerValue;
     public  List<GlobalParentOwnerBatch_Helper.CustomError> errorList = new List<GlobalParentOwnerBatch_Helper.CustomError>();
@@ -24,18 +21,25 @@ public class UpdateGlobalUltimateParentBatch implements Database.Batchable <sObj
     // Start Method : In start method we are fatching all the account and related child account where Global_Parent_Updated__c is true 
     public Database.QueryLocator start(Database.BatchableContext BC)
     {
-        accountMap = new Map<Id, Account>([select id, Global_Parent_Updated__c,Global_Ultimate_Parent__c,Changed_Global_Parent_Old_Owner__c   from Account where Global_Parent_Updated__c  = True]);
-        accountlist.addAll(accountMap.keySet());
-        query = 'select id,Global_Parent_Updated__c,Global_Ultimate_Parent__c ,Parent.Id,Parent.parent.Id,Parent.parent.parent.Id,Parent.parent.parent.parent.Id ' +
-            'from Account where Parent.Id In: accountlist Or Parent.Parent.Id In: accountlist Or Parent.Parent.Parent.Id In: accountlist Or Parent.parent.parent.parent.Id In: accountlist Or Id In: accountlist';
+        query = 'select id,Global_Parent_Updated__c,Global_Ultimate_Parent__c  from Account where Global_Parent_Updated__c  = True';
         return Database.getQueryLocator(query);
     }
     //Execute Method : Updating all the child account , and related Quote,order,Opportunity "Global_Ultimate_Account__c" and calling "GlobalParentOwnerBatch_Helper" with list of account. 
-    public void execute(Database.BatchableContext BC,List<sObject> batch)
+    public void execute(Database.BatchableContext BC,List<Account> batch)
     {
-        UpdateGlobalUltimateParentBatchHelper.returnValue  ret = UpdateGlobalUltimateParentBatchHelper.updateGlobalParent(batch,accountMap);
-      csvBody += ret.csvBody;
-        allAccSuccessId.addAll(ret.allAccSuccessId);
+      csvBody += UpdateGlobalUltimateParentBatchHelper.updateGlobalParent(batch);
+      list<Account> resetFlaglist = new list<Account>();
+            for(Account reset : batch){
+                reset.Global_Parent_Updated__c = false;
+                reset.Changed_Global_Parent_Old_Owner__c = null;
+                resetFlaglist.add(reset); 
+            }
+            try{
+                      Database.SaveResult[] srList = Database.Update(resetFlaglist, false);   
+            }catch(Exception e){
+                system.debug('**Error at line number---'+e.getLineNumber() + ' - '+ e.getMessage());
+            }
+        
     }
     
     //Finish Method : Sending faild record to admin and reset "Global_Parent_Updated__c" flag
@@ -67,19 +71,5 @@ public class UpdateGlobalUltimateParentBatch implements Database.Batchable <sObj
                             
                         }
                     }   
-        list<Account> finaAccllist = [select id,Global_Parent_Updated__c from Account where id in:allAccSuccessId];
-        list<Account> resetFlaglist = new list<Account>();
-        if(finaAccllist.size() > 0 && finaAccllist != null){
-            for(Account reset : finaAccllist){
-                reset.Global_Parent_Updated__c = false;
-                reset.Changed_Global_Parent_Old_Owner__c = null;
-                resetFlaglist.add(reset); 
-            }
-            try{
-            update resetFlaglist;
-            }catch(Exception e){
-                system.debug('**Error at line number---'+e.getLineNumber() + ' - '+ e.getMessage());
-            }
-        }
     }
 }

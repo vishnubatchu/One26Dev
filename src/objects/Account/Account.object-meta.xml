@@ -284,7 +284,6 @@
         <searchFilterFields>ACCOUNT.ADDRESS2_ZIP</searchFilterFields>
         <searchFilterFields>ACCOUNT.ADDRESS2_COUNTRY</searchFilterFields>
         <searchResultsAdditionalFields>ACCOUNT.NAME</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Glovia_Region__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ACCOUNT.URL</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ACCOUNT.ADDRESS1_STREET</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ACCOUNT.ADDRESS1_CITY</searchResultsAdditionalFields>
@@ -292,6 +291,7 @@
         <searchResultsAdditionalFields>ACCOUNT.ADDRESS1_ZIP</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ACCOUNT.ADDRESS1_COUNTRY</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Source_System__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Source_System_Id__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Read</sharingModel>
 </CustomObject>

@@ -13,8 +13,6 @@ public class UpdateGlobalParentLookupsBatchHelper {
                         } else{
                             soblistOfList.add(listOfShareRecTobeInserted);
                         }
-                        system.debug('soblistOfList###' + soblistOfList);
-                         system.debug('soblistOfList@@@' + soblistOfList.size());
                         if(!soblistOfList.isEmpty()){
                             for(list<Sobject> sl : soblistOfList){
                                 Database.SaveResult[] srList = Database.insert(sl, true); 

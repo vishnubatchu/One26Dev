@@ -500,4 +500,11 @@ c. Add Special Instruction: &quot;Issue these loaner returns to:</value>
         <shortDescription>starthere_note</shortDescription>
         <value>NOTE</value>
     </labels>
+    <labels>
+        <fullName>OneTimeBatchDeactivation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneTimeBatchDeactivation</shortDescription>
+        <value>False</value>
+    </labels>
 </CustomLabels>

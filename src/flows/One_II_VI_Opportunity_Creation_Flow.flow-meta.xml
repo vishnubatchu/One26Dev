@@ -153,6 +153,9 @@
         <label>Create Opportunity</label>
         <locationX>1915</locationX>
         <locationY>75</locationY>
+        <defaultConnector>
+            <targetReference>Success_Screen</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_Create_Opportunity</name>
@@ -413,11 +416,27 @@
         <picklistObject>Account</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
+        <name>Currency</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>IsoCode</picklistField>
+        <picklistObject>CurrencyType</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
         <name>CustomerQualReq</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
         <picklistField>Qual_Required__c</picklistField>
+        <picklistObject>Opportunity</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>MarlowBU</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Marlow_Product_BU__c</picklistField>
         <picklistObject>Opportunity</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
@@ -596,6 +615,12 @@ TEXT({!$User.Legacy_Company__c})=&quot;Marlow&quot;, &quot;Custom Part&quot;,
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>ShippingCountry</field>
+            <value>
+                <elementReference>X2_Digit_Shipping_Country_Code</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Type</field>
             <value>
                 <stringValue>Prospect</stringValue>
@@ -702,9 +727,21 @@ TEXT({!$User.Legacy_Company__c})=&quot;Marlow&quot;, &quot;Custom Part&quot;,
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>CurrencyIsoCode</field>
+            <value>
+                <elementReference>Currency</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Global_Ultimate_Account__c</field>
             <value>
                 <elementReference>varGlobalAccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Marlow_Product_BU__c</field>
+            <value>
+                <elementReference>Marlow_BU</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -840,7 +877,7 @@ TEXT({!$User.Legacy_Company__c})=&quot;Marlow&quot;, &quot;Custom Part&quot;,
         <name>Initial_Creation_Screen</name>
         <label>Initial Creation Screen</label>
         <locationX>1416</locationX>
-        <locationY>67</locationY>
+        <locationY>68</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1009,6 +1046,23 @@ TEXT({!$User.Legacy_Company__c})=&quot;Marlow&quot;, &quot;Custom Part&quot;,
                     </visibilityRule>
                 </fields>
                 <fields>
+                    <name>X2_Digit_Shipping_Country_Code</name>
+                    <dataType>String</dataType>
+                    <fieldText>2-Digit Shipping Country Code</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Create_Customer_Top_Level_Account</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>true</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
                     <name>Which_Type_of_Account_To_Create</name>
                     <choiceReferences>AccountRecordTypes</choiceReferences>
                     <dataType>String</dataType>
@@ -1152,17 +1206,26 @@ TEXT({!$User.Legacy_Company__c})=&quot;Marlow&quot;, &quot;Custom Part&quot;,
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
-                    <name>Opportunity_Name</name>
+                    <name>Opportunity_Currency</name>
+                    <choiceReferences>Currency</choiceReferences>
                     <dataType>String</dataType>
-                    <fieldText>Opportunity Name</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>true</isRequired>
+                    <fieldText>Opportunity Currency</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>false</isRequired>
                 </fields>
                 <fields>
                     <name>Customer_Qual_Req_d</name>
                     <choiceReferences>CustomerQualReq</choiceReferences>
                     <dataType>String</dataType>
                     <fieldText>Customer Qual Req&apos;d?</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <fields>
+                    <name>Marlow_BU</name>
+                    <choiceReferences>MarlowBU</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Marlow BU</fieldText>
                     <fieldType>DropdownBox</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
@@ -1177,6 +1240,13 @@ TEXT({!$User.Legacy_Company__c})=&quot;Marlow&quot;, &quot;Custom Part&quot;,
             <fields>
                 <name>Initial_Creation_Screen_Section4_Column2</name>
                 <fieldType>Region</fieldType>
+                <fields>
+                    <name>Opportunity_Name</name>
+                    <dataType>String</dataType>
+                    <fieldText>Opportunity Name</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
                 <fields>
                     <name>Opportunity_Amount</name>
                     <dataType>Number</dataType>
@@ -1252,7 +1322,7 @@ TEXT({!$User.Legacy_Company__c})=&quot;Marlow&quot;, &quot;Custom Part&quot;,
             <targetReference>getRecT</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>

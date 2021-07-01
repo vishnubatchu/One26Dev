@@ -59,6 +59,9 @@
         <label>update Global Parent</label>
         <locationX>380</locationX>
         <locationY>554</locationY>
+        <connector>
+            <targetReference>UpdateSubAccount</targetReference>
+        </connector>
         <inputAssignments>
             <field>Changed_Global_Parent_Old_Owner__c</field>
             <value>
@@ -92,6 +95,27 @@
         </inputAssignments>
         <inputReference>$Record</inputReference>
     </recordUpdates>
+    <recordUpdates>
+        <name>UpdateSubAccount</name>
+        <label>UpdateSubAccount</label>
+        <locationX>587</locationX>
+        <locationY>635</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ParentId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Global_Ultimate_Parent__c</field>
+            <value>
+                <elementReference>$Record.Global_Ultimate_Parent__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
     <start>
         <locationX>410</locationX>
         <locationY>48</locationY>
@@ -115,7 +139,7 @@
         </filters>
         <object>Account</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
-        <triggerType>RecordBeforeSave</triggerType>
+        <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
 </Flow>

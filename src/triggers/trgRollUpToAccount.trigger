@@ -1,5 +1,5 @@
 trigger trgRollUpToAccount on Opportunity (after insert, after update, after delete) {
-    
+    if(Label.OneTimeBatchDeactivation  == 'False'){
     Set<String> ids = new Set<String>();
     if(trigger.IsInsert)
         for(Opportunity o : trigger.New){
@@ -112,5 +112,5 @@ trigger trgRollUpToAccount on Opportunity (after insert, after update, after del
         }
     }
     if(accToUpdate.size() > 0)  Update accToUpdate;
-    
+    }  
 }

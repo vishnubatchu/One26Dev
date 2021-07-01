@@ -355,6 +355,12 @@
         <relatedList>RelatedAccountContactRelationList</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <fields>Meeting_Date__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>Meeting_Reports__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>QUOTE.NAME</fields>
         <fields>OPPORTUNITY.NAME</fields>
         <fields>QUOTE.ISSYNCING</fields>

@@ -5,6 +5,7 @@
     <errorConditionFormula>AND(
 AND(
 NOT($Permission.By_Pass_Validation),
+$Profile.Name &lt;&gt; &quot;System Administrator&quot;,
 NOT(ISBLANK(Source_System_Id__c)),
 TEXT(Type)=&quot;Customer&quot;,
 !ISCHANGED(Type),

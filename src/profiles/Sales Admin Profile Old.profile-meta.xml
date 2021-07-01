@@ -946,6 +946,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>UpdateSubAccountGlobalUltimateParent</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>UserTriggerHelper</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -3348,6 +3352,11 @@
         <editable>false</editable>
         <field>Costing_Quote__c.Qty_Range_6__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Costing_Quote__c.Quantity__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -6087,6 +6096,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Opportunity_Number__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Order_Created__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
