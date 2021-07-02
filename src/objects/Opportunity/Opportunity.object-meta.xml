@@ -169,6 +169,7 @@
         <searchResultsAdditionalFields>Next_12_Months_Revenue__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>OPPORTUNITY.NEXT_STEP</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Marketing_PN__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>PARTNER.NAME</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Private</sharingModel>
 </CustomObject>

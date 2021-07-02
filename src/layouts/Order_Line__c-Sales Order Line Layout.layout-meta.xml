@@ -110,10 +110,6 @@
                 <behavior>Edit</behavior>
                 <field>Legacy_Parent_Id__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Integration_Flag__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

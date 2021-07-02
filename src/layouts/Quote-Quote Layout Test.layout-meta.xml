@@ -146,6 +146,10 @@
                 <behavior>Edit</behavior>
                 <field>Global_Ultimate_Account__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Opportunity_Type__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

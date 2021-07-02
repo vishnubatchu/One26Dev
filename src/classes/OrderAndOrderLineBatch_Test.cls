@@ -94,15 +94,6 @@ private class OrderAndOrderLineBatch_Test {
         Test.stopTest();
     }
     
-    @isTest static void testDoSubListHelperMethod() {
-        Test.startTest();
-        List<Order> orderList=[Select Id from Order where Integration_Flag__c=true];
-        List<List<Sobject>> sObjectList=new List<List<Sobject>>();
-        OrderAndOrderLineBatch_Helper.doSubList(orderList,2,sObjectList);
-        System.assertEquals(3,sObjectList.size());
-        Test.stopTest();
-    }
-    
       @isTest static void testSendEmailHelperMethod() {
         Test.startTest();
         string csvHeader = 'Record Id,Object Name,Operation, Error \n';

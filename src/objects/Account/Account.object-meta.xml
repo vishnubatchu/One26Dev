@@ -292,6 +292,7 @@
         <searchResultsAdditionalFields>ACCOUNT.ADDRESS1_COUNTRY</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Source_System__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Source_System_Id__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ACCOUNT.RECORDTYPE</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Read</sharingModel>
 </CustomObject>

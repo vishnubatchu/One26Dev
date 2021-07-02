@@ -373,6 +373,11 @@ public class GlobalParentOwnerBatch_Helper {
         }
     }
     
+    //This method sends email with attachment if batch fails to process any records 
+    public static CustomError getCustomErrorObj(String id,String objectName,String operation,String message){
+        return new CustomError(id,objectName,operation,message);
+    }
+    
     public class CustomError
     {
         public String id{get;set;}

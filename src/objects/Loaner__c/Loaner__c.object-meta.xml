@@ -176,6 +176,7 @@
         <searchResultsAdditionalFields>RSM_PLM_Approval__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Company_Name_End_Cust__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Firm_Name_Sales_rep__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>RECORDTYPE</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Private</sharingModel>
     <visibility>Public</visibility>

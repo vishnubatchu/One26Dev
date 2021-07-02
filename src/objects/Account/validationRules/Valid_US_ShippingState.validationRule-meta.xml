@@ -5,7 +5,9 @@
     <errorConditionFormula>AND(ShippingCountry = &quot;US&quot;, NOT( CONTAINS(&quot;AL:AK:AZ:AR:CA:CO:CT:DE:DC:FL:GA:HI:ID:&quot; &amp;
 &quot;IL:IN:IA:KS:KY:LA:ME:MD:MA:MI:MN:MS:MO:MT:NE:NV:NH:&quot; &amp;
 &quot;NJ:NM:NY:NC:ND:OH:OK:OR:PA:PR:RI:SC:SD:TN:TX:UT:VT:VA:&quot; &amp;
-&quot;WA:WV:WI:WY&quot;, ShippingState)))</errorConditionFormula>
+&quot;WA:WV:WI:WY&quot;, ShippingState)),
+ TEXT($User.Legacy_Company__c )=&quot;Corp II-VI&quot;
+)</errorConditionFormula>
     <errorDisplayField>ShippingState</errorDisplayField>
     <errorMessage>Please enter a valid US state in the Shipping State field.</errorMessage>
 </ValidationRule>
