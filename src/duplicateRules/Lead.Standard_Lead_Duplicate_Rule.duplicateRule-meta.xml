@@ -16,10 +16,6 @@
         <objectMapping>
             <inputObject>Lead</inputObject>
             <mappingFields>
-                <inputField>Street</inputField>
-                <outputField>BillingStreet</outputField>
-            </mappingFields>
-            <mappingFields>
                 <inputField>PostalCode</inputField>
                 <outputField>BillingPostalCode</outputField>
             </mappingFields>
@@ -32,6 +28,14 @@
                 <outputField>Website</outputField>
             </mappingFields>
             <mappingFields>
+                <inputField>State</inputField>
+                <outputField>BillingState</outputField>
+            </mappingFields>
+            <mappingFields>
+                <inputField>Street</inputField>
+                <outputField>BillingStreet</outputField>
+            </mappingFields>
+            <mappingFields>
                 <inputField>Company</inputField>
                 <outputField>Name</outputField>
             </mappingFields>
@@ -42,10 +46,6 @@
             <mappingFields>
                 <inputField>Country</inputField>
                 <outputField>BillingCountry</outputField>
-            </mappingFields>
-            <mappingFields>
-                <inputField>State</inputField>
-                <outputField>BillingState</outputField>
             </mappingFields>
             <outputObject>Account</outputObject>
         </objectMapping>

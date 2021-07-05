@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <label>Global Ultimate Account</label>
     <lookupFilter>
-        <active>true</active>
+        <active>false</active>
         <filterItems>
             <field>Account.RecordTypeId</field>
             <operation>equals</operation>

@@ -318,6 +318,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CustomIterator</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CustomLeadConversion</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -431,6 +435,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>IndividualRecordHelperTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>InsertSharedRecordOneTimeBatch</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -986,6 +994,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>inshertSHaredRecordIterable</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>ordersBatch</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1035,6 +1047,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>trgUpdateLeadStatusTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>updateGlobalParentCustomIterable</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <custom>false</custom>
@@ -1736,6 +1752,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.Website</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.oneTimeBatchFlag__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

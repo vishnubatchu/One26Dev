@@ -31,6 +31,10 @@
                 <outputField>City</outputField>
             </mappingFields>
             <mappingFields>
+                <inputField>AccountId</inputField>
+                <outputField>Company</outputField>
+            </mappingFields>
+            <mappingFields>
                 <inputField>MailingStreet</inputField>
                 <outputField>Street</outputField>
             </mappingFields>
@@ -41,10 +45,6 @@
             <mappingFields>
                 <inputField>Title</inputField>
                 <outputField>Title</outputField>
-            </mappingFields>
-            <mappingFields>
-                <inputField>AccountId</inputField>
-                <outputField>Company</outputField>
             </mappingFields>
             <outputObject>Lead</outputObject>
         </objectMapping>

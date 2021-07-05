@@ -19,6 +19,7 @@ public class GlobalParentOwner_Batch implements Database.Batchable<sObject>,Data
     
     /*This method inserts share record for the new Global Account owner for all related private records including Contacts, 
      * Opportunities, Quotes, Orders, Order Lines and Cases. Also deletes share records for the previous owner of the Global Parent.
+     * and reset "Global_Parent_Previous_Owner__c"
      */
     public void execute(Database.BatchableContext bc, List<Account> accountList){
         // process each batch of records
@@ -43,7 +44,7 @@ public class GlobalParentOwner_Batch implements Database.Batchable<sObject>,Data
                             for(Database.Error err : sr.getErrors()) {
                                 message+= err.getMessage();
                             }
-                            errorList.add(GlobalParentOwnerBatch_Helper.getCustomErrorObj(accountListToUpdate[lstIndex].Id,'Order','Update',message));
+                            errorList.add(GlobalParentOwnerBatch_Helper.getCustomErrorObj(accountListToUpdate[lstIndex].Id,'Account','Update',message));
                         }
                         lstIndex++;
                     }
@@ -63,8 +64,7 @@ public class GlobalParentOwner_Batch implements Database.Batchable<sObject>,Data
         }
     }
     
-    /*This method sends failed record details to configured emailId if any and 
-    	reset "Global_Parent_Previous_Owner__c"
+    /*This method sends failed record details to configured emailId if any 
 	*/
     public void finish(Database.BatchableContext bc){
         // execute any post-processing operations
