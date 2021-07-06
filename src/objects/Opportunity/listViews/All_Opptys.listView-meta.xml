@@ -8,6 +8,7 @@
     <columns>OPPORTUNITY.AMOUNT</columns>
     <columns>CORE.USERS.ALIAS</columns>
     <columns>Marketing_PN__c</columns>
+    <columns>OPPORTUNITY.CREATED_DATE</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>Design_Registration__c</field>

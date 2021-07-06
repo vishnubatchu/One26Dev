@@ -6,7 +6,7 @@
 @isTest
 public class UpdateGlobalUltimateParentBatchTest {
     @testSetup static void setup() {
-        Profile salesUserProfile = [SELECT Id FROM Profile WHERE Name = 'Sales Profile Clone' LIMIT 1];
+        Profile salesUserProfile = [SELECT Id FROM Profile WHERE Name = 'One II-VI Sales Rep' LIMIT 1];
         List<User>  testUserList=new List<User>();
         for(Integer i=0;i<2;i++){
             String orgId = userInfo.getOrganizationId();
@@ -102,15 +102,7 @@ public class UpdateGlobalUltimateParentBatchTest {
         list<Account> finalList = [select id,Global_Parent_Updated__c from Account where Global_Parent_Updated__c = True]; 
         
     }
-    @isTest static void testDoSubListHelperMethod() {
-        Test.startTest();
-        List<Account> orderList=[Select Id from Account];
-        List<List<Sobject>> sObjectList=new List<List<Sobject>>();
-        sObjectList = UpdateGlobalUltimateParentBatchHelper.doSubList(orderList);
-        Test.stopTest();
-        System.assertEquals(1,sObjectList.size());
-        
-    }
+  
     @isTest static void testCreateCSVHelperMethod() {
         Test.startTest();
         list<Account> globalParentList = new list<Account>();

@@ -4,7 +4,6 @@ private class LoanerIntegrationTest {
     @isTest 
     static void testValidateLoanerCallout()
     {
-       
         TestDataUtilityClass.preparetestData();
         List<Loaner__c> loaners  = [select Id,Name,Opportunity_Type__c,Opportunity__c,Est_Production_Date__c ,(select Id,Product__c,Name,Est_Annual_Qty__c From Loaner_Lines__r ) From Loaner__c where  Opportunity_Type__c='New Opportunity - < 100K SAM' Limit 1];
         Test.setMock(WebServiceMock.class, new LoanerIntegrationMockResponse());
@@ -12,9 +11,8 @@ private class LoanerIntegrationTest {
         loanerparameter.loanerId =loaners[0].Id;
         List<LoanerIntegration_Wsdl.LoanerParameter> loanerparameters = new   List<LoanerIntegration_Wsdl.LoanerParameter> ();
         loanerparameters.add(loanerparameter);
-         Test.startTest();
         List<String> errormessages = LoanerIntegration_Wsdl.invokeService(loanerparameters);
-               Test.stopTest();
+        
         for(String msg:errormessages )
         {
             System.assertEquals('You have uncommitted work pending. Please commit or rollback before calling out' ,msg);
@@ -22,7 +20,7 @@ private class LoanerIntegrationTest {
         
         
     }
-    /*@isTest 
+    @isTest 
     static void testValidateRecords()
     {
         
@@ -46,5 +44,5 @@ private class LoanerIntegrationTest {
         Test.stopTest();
         
         
-    }*/
+    }
 }

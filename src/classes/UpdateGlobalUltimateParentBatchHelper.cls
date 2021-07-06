@@ -42,17 +42,8 @@ public class UpdateGlobalUltimateParentBatchHelper {
         }
         
         //Update finalUpdateList
-        try{
             if(finalUpdateList.size() > 0 && finalUpdateList != null ){
-                list<list<Sobject>> soblistOfList = new list<list<Sobject>>();
-                if(finalUpdateList.size()>10000){
-                    soblistOfList.addAll(doSubList(finalUpdateList));
-                } else{
-                    soblistOfList.add(finalUpdateList);
-                }
-                if(!soblistOfList.isEmpty()){
-                    for(list<Sobject> sl : soblistOfList){
-                        Database.SaveResult[] srList = Database.Update(sl, false); 
+                        Database.SaveResult[] srList = Database.Update(finalUpdateList, false); 
                         for (Database.SaveResult sr : srList) {
                             if (sr.isSuccess()) {
                             }
@@ -63,17 +54,9 @@ public class UpdateGlobalUltimateParentBatchHelper {
                                     message+= err.getMessage();
                                 }
                             }
-                        }
-                    } 
-                }
+                        } 
             }
-        }catch(Exception e){
-            system.debug('**Error at line number---'+e.getLineNumber() + ' - '+ e.getMessage());
-        }
-        
-     
         return csvBody;
-        
     }
     public static string createCSVBody(string ObjName ,database.SaveResult[] updateResult){
         string body = '';
@@ -94,32 +77,4 @@ public class UpdateGlobalUltimateParentBatchHelper {
         }
         return body;
     }
-    
-    //create Sub List if list has more then 10000 record 
-    public static list<list<Sobject>> doSubList(List<Sobject> recordList)
-    {
-        long secondInterval = recordList.size();
-        list<list<Sobject>> sublistOfList = new list<list<Sobject>>();
-        decimal listsize = recordList.size();
-        decimal recordCount = listsize.divide(10000, 2);
-        long interval = recordCount.round(System.RoundingMode.CEILING);
-        if(interval != 0){
-            decimal recordCount2 = listsize.divide(interval, 2);
-            secondInterval = recordCount2.round(System.RoundingMode.CEILING);
-        }
-        List<Sobject> shareRecordList = new List<Sobject>();
-        for(Sobject sh : recordList){
-            if(shareRecordList.size() <=  secondInterval){
-                shareRecordList.add(sh);
-            }else{
-                sublistOfList.add(shareRecordList);
-                shareRecordList = new List<Sobject>();
-                shareRecordList.add(sh);
-            }
-        }
-        sublistOfList.add(shareRecordList);
-        
-        return sublistOfList;
-    }
-  
 }
