@@ -5,6 +5,6 @@
     <description>Japan Account Manager</description>
     <mayForecastManagerShare>false</mayForecastManagerShare>
     <name>Japan Account Manager</name>
-    <opportunityAccessLevel>None</opportunityAccessLevel>
+    <opportunityAccessLevel>Read</opportunityAccessLevel>
     <parentRole>JapanSalesMgr</parentRole>
 </Role>

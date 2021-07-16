@@ -1,4 +1,9 @@
 trigger QuoteItemPLMDashboardTrigger on Quote_Item__c (before Insert, after insert, after update, before update, after delete) {
+      map<string,boolean> triggerOnOfMap = new map<string,boolean>();
+    for(TriggerOnOf__mdt trg : [SELECT Id,MasterLabel,Deactivate__c  from TriggerOnOf__mdt ]){
+        triggerOnOfMap.put(trg.MasterLabel,trg.Deactivate__c);
+    }
+    if(!triggerOnOfMap.get('QuoteItemPLMDashboardTrigger')){
     //Added by Akhilesh for bypass "getPLMApprover" if loginUse's 	Legacy Company is not "Finisar"
     user u = [select id, Legacy_Company__c  from user where id =: UserInfo.getUserId() ];
     //Added by Surendar
@@ -23,5 +28,6 @@ trigger QuoteItemPLMDashboardTrigger on Quote_Item__c (before Insert, after inse
     } 
     if(trigger.isDelete && trigger.isAfter){
         QuoteLinesHelper.updateBuonQuote(trigger.old);
+    }
     }
 }

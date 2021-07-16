@@ -178,6 +178,11 @@ Manufacture Location (Quotes)</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.Derived_Region_formula__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.Description</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -338,6 +343,11 @@ Manufacture Location (Quotes)</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.Key_Account_Formula__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.Key_Account__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -359,6 +369,11 @@ Manufacture Location (Quotes)</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.Legacy_Id__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Legacy_Salesforce_Org__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1783,6 +1798,11 @@ Manufacture Location (Quotes)</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Contact.Legacy_Salesforce_Org__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Contact.MailingAddress</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -2183,6 +2203,11 @@ Manufacture Location (Quotes)</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Costing_Quote__c.Legacy_Salesforce_Org__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Costing_Quote__c.MOQ__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -2379,6 +2404,11 @@ Manufacture Location (Quotes)</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Costing__c.Internal_Cost_Project_No__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Costing__c.Legacy_Salesforce_Org__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2664,6 +2694,11 @@ Manufacture Location (Quotes)</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Event.IsVisibleInSelfService</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.Legacy_Salesforce_Org__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3479,6 +3514,11 @@ Manufacture Location (Quotes)</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Lead.Lead_Source_Text__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.Legacy_Salesforce_Org__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4538,6 +4578,11 @@ Manufacture Location (Quotes)</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Meeting_Reports__c.Legacy_Salesforce_Org__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Meeting_Reports__c.Location__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -4884,6 +4929,11 @@ Manufacture Location (Quotes)</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Legacy_ID__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Legacy_Salesforce_Org__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5749,6 +5799,11 @@ Manufacture Location (Quotes)</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Order.Legacy_Salesforce_Id__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.Legacy_Salesforce_Org__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7193,6 +7248,11 @@ Manufacture Location (Quotes)</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Product2.Hierarchy_Division__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Product2.II_VI_DE_Long_Description__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -7229,6 +7289,11 @@ Manufacture Location (Quotes)</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Product2.Legacy_Part_No__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Product2.Legacy_Salesforce_Org__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7784,6 +7849,11 @@ Manufacture Location (Quotes)</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Quote.Legacy_Id_Quote__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Quote.Legacy_Salesforce_Org__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9508,6 +9578,11 @@ Manufacture Location (Quotes)</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Task.Legacy_Salesforce_Org__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Task.Major_Activity__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -9593,6 +9668,11 @@ Manufacture Location (Quotes)</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>User.II_VI_Region__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>User.Legacy_Company__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -9623,6 +9703,11 @@ Manufacture Location (Quotes)</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>User.RSH__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>User.Region__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -9634,6 +9719,16 @@ Manufacture Location (Quotes)</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>User.SVP__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.Sub_region_1__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.Sub_region_2__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

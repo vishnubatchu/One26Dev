@@ -809,6 +809,21 @@
             <field>Region_Country__c</field>
             <table>Account</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Legacy_Salesforce_Org__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Derived_Region_formula__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Key_Account_Formula__c</field>
+            <table>Account</table>
+        </columns>
         <masterLabel>Accounts</masterLabel>
     </sections>
     <sections>
@@ -975,6 +990,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Meeting_Month__c</field>
+            <table>Account.Call_Reports__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Legacy_Salesforce_Org__c</field>
             <table>Account.Call_Reports__r</table>
         </columns>
         <masterLabel>Meeting Reports</masterLabel>
@@ -1183,6 +1203,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Est_Completion_Date__c</field>
+            <table>Account.Call_Reports__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Legacy_Salesforce_Org__c</field>
             <table>Account.Call_Reports__r.Activities</table>
         </columns>
         <masterLabel>Activities</masterLabel>

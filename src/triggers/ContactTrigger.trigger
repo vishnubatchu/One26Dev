@@ -1,5 +1,9 @@
 trigger ContactTrigger on Contact (before insert,before update, before delete,after insert) {
-    
+     map<string,boolean> triggerOnOfMap = new map<string,boolean>();
+    for(TriggerOnOf__mdt trg : [SELECT Id,MasterLabel,Deactivate__c  from TriggerOnOf__mdt ]){
+        triggerOnOfMap.put(trg.MasterLabel,trg.Deactivate__c);
+    }
+    if(!triggerOnOfMap.get('ContactTrigger')){
     if( trigger.isBefore){
         if( trigger.isInsert ){
           //  ContactForGDPR.checkCountry(trigger.new);
@@ -32,5 +36,6 @@ trigger ContactTrigger on Contact (before insert,before update, before delete,af
             ContactForGDPR.sendMailUponCreation(trigger.new);
         }
         
+    }
     }
 }

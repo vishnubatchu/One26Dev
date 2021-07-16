@@ -14,11 +14,11 @@ private class CreateSalesOrderInSAPTest {
         PriceBookEntry pb = [Select Id from PriceBookEntry Where product2Id = :prd[0].Id AND CurrencyIsoCode = 'USD' AND PriceBook2Id = :pricel[0].Id limit 1];
         List<OpportunityLineItem> oppLines = TestDataFactory.creatOppLine(opp[0].Id, 2, prd[0].Id, pb.id);
         
-        /*TestDataFactory.createOppRatePla(oppLines[0].Id, 10, 100);
+       TestDataFactory.createOppRatePla(oppLines[0].Id, 10, 100);
         List<Order> orders = TestDataFactory.createOrders(opp[0].Id, acc[0].Id, 1);
         orders[0].Pricebook2Id = pricel[0].Id;
         update orders;
-        List<Order_Line__c> items = TestDataFactory.createOrderLines(orders[0].Id, prd[0].Id, pb.Id, 2);*/        
+        List<Order_Line__c> items = TestDataFactory.createOrderLines(orders[0].Id, prd[0].Id, pb.Id, 2);       
     }
     @isTest
     static void testCreateOrderInSAP(){

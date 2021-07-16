@@ -5,6 +5,11 @@ created By : Surendar
 Description : Lead trigger with before & after Insert events to map with individual record.
 **/
 trigger LeadTrigger on Lead (before insert, after insert, before delete) {
+     map<string,boolean> triggerOnOfMap = new map<string,boolean>();
+    for(TriggerOnOf__mdt trg : [SELECT Id,MasterLabel,Deactivate__c  from TriggerOnOf__mdt ]){
+        triggerOnOfMap.put(trg.MasterLabel,trg.Deactivate__c);
+    }
+    if(!triggerOnOfMap.get('LeadTrigger')){
     if(trigger.isInsert && trigger.isBefore){
         // LeadTriggerHepler.updateLeadwithIndividual(trigger.new);
         IndividualRecordHelper.updatewithIndividual(trigger.new);
@@ -17,5 +22,6 @@ trigger LeadTrigger on Lead (before insert, after insert, before delete) {
     }
     if(trigger.isDelete && trigger.isBefore){
         LeadGDPRController.sendMailUponDeletion(trigger.old);
+    }
     }
 }

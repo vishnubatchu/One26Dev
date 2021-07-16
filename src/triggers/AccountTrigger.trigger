@@ -1,4 +1,9 @@
 trigger AccountTrigger on Account (after insert,after update,before insert,before update) {
+     map<string,boolean> triggerOnOfMap = new map<string,boolean>();
+    for(TriggerOnOf__mdt trg : [SELECT Id,MasterLabel,Deactivate__c  from TriggerOnOf__mdt ]){
+        triggerOnOfMap.put(trg.MasterLabel,trg.Deactivate__c);
+    }
+    if(!triggerOnOfMap.get('AccountTrigger')){
     if(Trigger.isAfter){
         if(Trigger.isInsert){
             AccountTriggerHelper.afterInsert(Trigger.new);
@@ -17,5 +22,6 @@ trigger AccountTrigger on Account (after insert,after update,before insert,befor
             //AccountTriggerHelper.updateSharing(trigger.newMap, trigger.oldMap);
             AccountTriggerHelper.updateGlblPrntPrevOwner(trigger.new, trigger.oldMap);
         } 
+    }
     }
 }

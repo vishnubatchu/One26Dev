@@ -2,16 +2,17 @@
 public class ContactForGDPRTest {
     
     static testmethod void contactForGDPRtest() { 
-        Account globalParentAcc=new Account(Name='Global Parent Test Acc',RecordTypeId=Schema.SObjectType.Account.getRecordTypeInfosByName().get('Global Parent').getRecordTypeId());
+        
+        Account globalParentAcc=new Account(Name='Global Parent Test Acc',RecordTypeId=Schema.SObjectType.Account.getRecordTypeInfosByName().get('Global Parent').getRecordTypeId(),Display_Billing_Country__c = 'United States',ShippingCity = 'New York', ShippingCountry ='US');
         insert globalParentAcc;
         Account acc = new Account(name='Account ',ParentId=globalParentAcc.Id,
-                billingcity='New York', billingcountry='USA',Status__c='Active',Type='Customer',RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Top Level Account').getRecordTypeId());
+                billingcity='New York', billingcountry='USA',Status__c='Active',Type='Customer',RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Top Level Account').getRecordTypeId(),Display_Billing_Country__c = 'United States',ShippingCity = 'New York', ShippingCountry ='US');
         insert acc;
         Account acc1 = new Account(ParentId = globalParentAcc.Id,name='Account1 ', 
-                billingcity='New York test', billingcountry='USA',Status__c='Active',Type='Party',RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Top Level Account').getRecordTypeId());
+                billingcity='New York test', billingcountry='USA',Status__c='Active',Type='Party',RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Top Level Account').getRecordTypeId(),Display_Billing_Country__c = 'United States',ShippingCity = 'New York', ShippingCountry ='US');
         
         insert acc1;
-        Account acc2 = new Account(name='Account3',shippingcity='Raipur',shippingcountry='India',Status__c='Active',Type='Distributor',RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer Account').getRecordTypeId(),Legacy_Id__c ='eoqw3214132421341');
+        Account acc2 = new Account(ParentId = globalParentAcc.Id,name='Account3',shippingcity='Raipur',shippingcountry='India',Status__c='Active',Type='Distributor',RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer Account').getRecordTypeId(),Legacy_Id__c ='eoqw3214132421341');
 
         
         insert acc2;
@@ -22,7 +23,7 @@ public class ContactForGDPRTest {
         Test.startTest();
         List<Contact> conlist = new List<Contact>(); 
         
-        Contact c = new Contact(FirstName = 'Test',LastName = 'Contact',Display_Mailing_Country__c='United States',AccountId = acc.Id,MailingCountry='United States',Email='rest@vv.com');
+         Contact c = new Contact(FirstName = 'Test',LastName = 'Contact',Display_Mailing_Country__c='United States',AccountId = acc.Id,MailingCountry='United States',Email='rest@vv.com');
         Contact c4 = new Contact(FirstName = 'Test',LastName = 'Contact',Display_Mailing_Country__c='China',AccountId = acc.Id,MailingCountry='CHINA',Email='rest@vv.com');
         Contact c1 = new Contact(FirstName = 'Test1',LastName = 'Contact',Display_Mailing_Country__c='Canada',AccountId = acc1.Id,MailingCountry='CANADA',Email='rest@vv.com');
         Contact c5 = new Contact(FirstName = 'Test1',LastName = 'Contact',Display_Mailing_Country__c='Canada',AccountId = acc2.Id,MailingCountry='CANADA',Email='rest@vv.com');

@@ -84,6 +84,10 @@
                 <behavior>Edit</behavior>
                 <field>Do_not_partial__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Legacy_Salesforce_Org__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

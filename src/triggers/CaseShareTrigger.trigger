@@ -1,5 +1,9 @@
 trigger CaseShareTrigger on Case (After insert,After update, Before delete) {
-    
+     map<string,boolean> triggerOnOfMap = new map<string,boolean>();
+    for(TriggerOnOf__mdt trg : [SELECT Id,MasterLabel,Deactivate__c  from TriggerOnOf__mdt ]){
+        triggerOnOfMap.put(trg.MasterLabel,trg.Deactivate__c);
+    }
+    if(!triggerOnOfMap.get('CaseShareTrigger')){
     If(Trigger.isInsert && Trigger.isAfter){
         CaseShareTriggerHelper.accessToSalesOrDistributor(Trigger.NewMap);
     }
@@ -24,4 +28,5 @@ trigger CaseShareTrigger on Case (After insert,After update, Before delete) {
                 caseObj.addError('Serial Number Validation in progress. RMA Case cannot be updated.');
         }
     } 
+    }
 }

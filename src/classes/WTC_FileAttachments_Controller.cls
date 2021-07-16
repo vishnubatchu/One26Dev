@@ -1,4 +1,4 @@
-public with sharing class WTC_FileAttachments_Controller {
+public class WTC_FileAttachments_Controller {
 
     // The maximum number of file inputs that appear on the page
     final Integer NUM_FILE_INPUTS = 10;
@@ -108,6 +108,7 @@ public with sharing class WTC_FileAttachments_Controller {
                       				ContentDocumentId = cv.ContentDocumentId, 
                                    	LinkedEntityId = caseId));
                 }
+                system.debug('Documents to be inserted>>>>'+cdLinks);
                 insert cdLinks;
                 //End - In order to link the documents with case
                 System.debug('[-] Inserted ' + toInsert.size() + ' atts');
@@ -125,7 +126,7 @@ public with sharing class WTC_FileAttachments_Controller {
                 }
                 ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, combined);
                 ApexPages.addMessage(myMsg);
-
+	
                 resetFileInputs();
             } else {
                 successfulUpload = true;
@@ -164,7 +165,7 @@ public with sharing class WTC_FileAttachments_Controller {
             try {
                 String left = ApexPages.currentPage().getParameters().get('caseID').substring(0, 15);
                 Case c = [SELECT Id, CreatedDate FROM Case WHERE Id = :left];
-
+				system.debug('Case:  '+c);
                 System.debug('[-] Time since case submitted: ' + (System.currentTimeMillis() - c.CreatedDate.getTime()));
                 System.debug('[-] Time limit: ' + EXPIRATION_LIMIT);
 

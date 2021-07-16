@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Mailing_Country_Required</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR(
+ISBLANK( MailingCountry) ,
+ TEXT(Display_Mailing_Country__c ) = &quot;&quot;
+)</errorConditionFormula>
+    <errorMessage>Please ensure that both mailing country and display mailing country are populated</errorMessage>
+</ValidationRule>

@@ -1,4 +1,9 @@
 trigger ProductTrigger on Product2 (before insert, after insert, after update) {
+       map<string,boolean> triggerOnOfMap = new map<string,boolean>();
+    for(TriggerOnOf__mdt trg : [SELECT Id,MasterLabel,Deactivate__c  from TriggerOnOf__mdt ]){
+        triggerOnOfMap.put(trg.MasterLabel,trg.Deactivate__c);
+    }
+    if(!triggerOnOfMap.get('ProductTrigger')){
     String integrationUserIdStr=System.Label.Integration_UserId;
     List<String> integrationUserIdLst=new List<String>();
     if(integrationUserIdStr!=null && integrationUserIdStr.trim()!=''){
@@ -32,5 +37,6 @@ trigger ProductTrigger on Product2 (before insert, after insert, after update) {
                 ProductTriggerHelper.updatePrdctShrngOnUSMOOrSegmentChange(updatedProducts);  
             }
         }
+    }
     }
 }

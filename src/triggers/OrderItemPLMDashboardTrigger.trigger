@@ -1,4 +1,9 @@
 trigger OrderItemPLMDashboardTrigger on Order_Line__c (before update,before insert,after insert, after update) {
+      map<string,boolean> triggerOnOfMap = new map<string,boolean>();
+    for(TriggerOnOf__mdt trg : [SELECT Id,MasterLabel,Deactivate__c  from TriggerOnOf__mdt ]){
+        triggerOnOfMap.put(trg.MasterLabel,trg.Deactivate__c);
+    }
+    if(!triggerOnOfMap.get('OrderItemPLMDashboardTrigger')){
     if(!AccountTriggerHelper.isAccountupdate){
     List<Order_Line__c> updatedOrderLines = new List<Order_Line__c>();
     If(Trigger.isInsert && Trigger.isAfter){
@@ -29,4 +34,5 @@ trigger OrderItemPLMDashboardTrigger on Order_Line__c (before update,before inse
         OrderItemPLMDashboardTriggerHelper.checkHROCM(trigger.new);
     }
 }
+    }
 }

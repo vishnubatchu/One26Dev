@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sub_region_2__c</fullName>
+    <externalId>false</externalId>
+    <label>Sub-region 2</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Sub_region_1__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Tom Neff</fullName>
+                <default>false</default>
+                <label>Tom Neff</label>
+            </value>
+            <value>
+                <fullName>Johnny Zhong/Mark Robinson</fullName>
+                <default>false</default>
+                <label>Johnny Zhong/Mark Robinson</label>
+            </value>
+            <value>
+                <fullName>Chris Ding</fullName>
+                <default>false</default>
+                <label>Chris Ding</label>
+            </value>
+            <value>
+                <fullName>Derek Lou</fullName>
+                <default>false</default>
+                <label>Derek Lou</label>
+            </value>
+            <value>
+                <fullName>Allan Wei</fullName>
+                <default>false</default>
+                <label>Allan Wei</label>
+            </value>
+            <value>
+                <fullName>Paul Deng</fullName>
+                <default>false</default>
+                <label>Paul Deng</label>
+            </value>
+            <value>
+                <fullName>Hiroshi Miyata</fullName>
+                <default>false</default>
+                <label>Hiroshi Miyata</label>
+            </value>
+            <value>
+                <fullName>Masahiko Someya</fullName>
+                <default>false</default>
+                <label>Masahiko Someya</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Americas-Industrial</controllingFieldValue>
+            <valueName>Tom Neff</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Americas-Communications</controllingFieldValue>
+            <valueName>Johnny Zhong/Mark Robinson</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gr. China-Telecom OEM</controllingFieldValue>
+            <valueName>Chris Ding</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gr. China-Telecom-ICP/Carrier</controllingFieldValue>
+            <valueName>Derek Lou</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gr. China-Advance Optics</controllingFieldValue>
+            <valueName>Allan Wei</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gr. China-Industry</controllingFieldValue>
+            <valueName>Paul Deng</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Japan-Industrial</controllingFieldValue>
+            <valueName>Hiroshi Miyata</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Japan-Communications</controllingFieldValue>
+            <valueName>Masahiko Someya</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

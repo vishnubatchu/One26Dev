@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RSH__c</fullName>
+    <externalId>false</externalId>
+    <label>RSH</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>II_VI_Region__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>John Ryan</fullName>
+                <default>false</default>
+                <label>John Ryan</label>
+            </value>
+            <value>
+                <fullName>Greg Hart</fullName>
+                <default>false</default>
+                <label>Greg Hart</label>
+            </value>
+            <value>
+                <fullName>Frank Fu</fullName>
+                <default>false</default>
+                <label>Frank Fu</label>
+            </value>
+            <value>
+                <fullName>Giorgio Ghislotti</fullName>
+                <default>false</default>
+                <label>Giorgio Ghislotti</label>
+            </value>
+            <value>
+                <fullName>Yasuhiro Sakakibara</fullName>
+                <default>false</default>
+                <label>Yasuhiro Sakakibara</label>
+            </value>
+            <value>
+                <fullName>YoungTae Lee</fullName>
+                <default>false</default>
+                <label>YoungTae Lee</label>
+            </value>
+            <value>
+                <fullName>Christopher Leow</fullName>
+                <default>false</default>
+                <label>Christopher Leow</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Americas</controllingFieldValue>
+            <valueName>John Ryan</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Americas</controllingFieldValue>
+            <valueName>Greg Hart</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Asia South</controllingFieldValue>
+            <valueName>Christopher Leow</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>EMEA</controllingFieldValue>
+            <valueName>Giorgio Ghislotti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gr. China</controllingFieldValue>
+            <valueName>Frank Fu</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Japan</controllingFieldValue>
+            <valueName>Yasuhiro Sakakibara</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Korea</controllingFieldValue>
+            <valueName>YoungTae Lee</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

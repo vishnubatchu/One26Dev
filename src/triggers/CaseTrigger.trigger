@@ -1,4 +1,9 @@
 trigger CaseTrigger on Case (before insert) {
+     map<string,boolean> triggerOnOfMap = new map<string,boolean>();
+    for(TriggerOnOf__mdt trg : [SELECT Id,MasterLabel,Deactivate__c  from TriggerOnOf__mdt ]){
+        triggerOnOfMap.put(trg.MasterLabel,trg.Deactivate__c);
+    }
+    if(!triggerOnOfMap.get('CaseTrigger')){
 
     // Link the Contact to the Case for the custom web to case feature
     // This is done via trigger to avoid exposing Contact access perms to Guest Site user
@@ -28,5 +33,5 @@ trigger CaseTrigger on Case (before insert) {
         }
     }
     // End linking Contact to the Case for custom web to case feature
-
+    }
 }

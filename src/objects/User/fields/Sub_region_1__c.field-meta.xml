@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sub_region_1__c</fullName>
+    <externalId>false</externalId>
+    <label>Sub-region 1</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>RSH__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Americas-Industrial</fullName>
+                <default>false</default>
+                <label>Americas-Industrial</label>
+            </value>
+            <value>
+                <fullName>Americas-Communications</fullName>
+                <default>false</default>
+                <label>Americas-Communications</label>
+            </value>
+            <value>
+                <fullName>Gr. China-Telecom OEM</fullName>
+                <default>false</default>
+                <label>Gr. China-Telecom OEM</label>
+            </value>
+            <value>
+                <fullName>Gr. China-Telecom-ICP/Carrier</fullName>
+                <default>false</default>
+                <label>Gr. China-Telecom-ICP/Carrier</label>
+            </value>
+            <value>
+                <fullName>Gr. China-Advance Optics</fullName>
+                <default>false</default>
+                <label>Gr. China-Advance Optics</label>
+            </value>
+            <value>
+                <fullName>Gr. China-Industry</fullName>
+                <default>false</default>
+                <label>Gr. China-Industry</label>
+            </value>
+            <value>
+                <fullName>Japan-Industrial</fullName>
+                <default>false</default>
+                <label>Japan-Industrial</label>
+            </value>
+            <value>
+                <fullName>Japan-Communications</fullName>
+                <default>false</default>
+                <label>Japan-Communications</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>John Ryan</controllingFieldValue>
+            <valueName>Americas-Industrial</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Greg Hart</controllingFieldValue>
+            <valueName>Americas-Communications</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Frank Fu</controllingFieldValue>
+            <valueName>Gr. China-Telecom OEM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Frank Fu</controllingFieldValue>
+            <valueName>Gr. China-Telecom-ICP/Carrier</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Frank Fu</controllingFieldValue>
+            <valueName>Gr. China-Advance Optics</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Frank Fu</controllingFieldValue>
+            <valueName>Gr. China-Industry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Yasuhiro Sakakibara</controllingFieldValue>
+            <valueName>Japan-Industrial</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Yasuhiro Sakakibara</controllingFieldValue>
+            <valueName>Japan-Communications</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

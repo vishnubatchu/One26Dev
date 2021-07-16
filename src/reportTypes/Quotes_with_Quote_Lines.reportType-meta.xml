@@ -630,6 +630,11 @@
             <field>Opportunity_Type__c</field>
             <table>Quote</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Legacy_Salesforce_Org__c</field>
+            <table>Quote</table>
+        </columns>
         <masterLabel>Quotes</masterLabel>
     </sections>
     <sections>
